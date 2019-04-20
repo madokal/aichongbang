@@ -1,4 +1,4 @@
-# aichongbang-pet
+# aichongbang
 
 ## Project setup
 ```
