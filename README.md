@@ -1,4 +1,4 @@
-# lovo-pet
+# aichongbang
 
 ## Project setup
 ```
