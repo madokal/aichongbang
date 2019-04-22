@@ -1,12 +1,23 @@
 <template>
-  <div>
-    <h1>门店管理</h1>
-  </div>
+    <div>
+      <ShopsList></ShopsList>
+    </div>
 </template>
 
 <script>
-export default {};
+import ShopsList from "./ShopsList"
+export default {
+  data() {
+    return {};
+  },
+  components: {
+   ShopsList
+  },
+  methods: {}
+};
+
 </script>
 
-<style scoped>
+<style>
+
 </style>
