@@ -1,5 +1,6 @@
 <template>
     <div>
+     
       <ShopsList></ShopsList>
     </div>
 </template>
@@ -11,7 +12,8 @@ export default {
     return {};
   },
   components: {
-   ShopsList
+   ShopsList,
+ 
   },
   methods: {}
 };

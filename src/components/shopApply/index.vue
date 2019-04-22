@@ -169,7 +169,7 @@ export default {
               tel: this.ruleForm2.tel,
               legalPerson: this.ruleForm2.legalPerson,
               special: this.ruleForm2.special,
-              storeStatus: 1
+              storeStatus: "0"
             }
           }).then(res => {
             this.$router.push("/login");
@@ -217,9 +217,7 @@ export default {
 .avatar-uploader .el-upload:hover {
   border-color: #409eff;
 }
-.el-upload-list__item-name {
-  margin: ;
-}
+
 .avatar-uploader-icon {
   width: "250px";
   font-size: 28px;
