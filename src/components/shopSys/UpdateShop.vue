@@ -70,7 +70,7 @@ export default {
   },
   methods: {
     ...mapMutations(["setShop", "setVisible"]),
-    ...mapActions(["setShops"]),
+    ...mapActions(["setShops1"]),
     updateShop(id) {
       console.log(11)
         if (this.shop.VIPlevel && this.shop.commission) {
@@ -79,7 +79,7 @@ export default {
             url: "/shopSys/" + id,
             data: this.shop
           }).then(() => {
-            this.setShops({
+            this.setShops1({
               // page: this.pagination.curpage,
               // rows: this.pagination.eachpage
             });

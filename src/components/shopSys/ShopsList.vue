@@ -9,6 +9,7 @@
                         :data="shops"
                         height="350"
                         border
+                       
                         style="width: 100%">
                     <el-table-column
                         prop="name"
@@ -178,7 +179,7 @@
                             <el-button
                                 size="mini"
                                 type="primary"
-                                @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                                @click="handleAudit(scope.$index, scope.row)">审核该门店</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -213,7 +214,13 @@ export default {
   },
   methods: {
     ...mapActions(["setShops", "setShops1", "setShops2"]),
-    ...mapMutations(["setShop", "setVisible", "setTabName"]),
+    ...mapMutations([
+      "setShop",
+      "setVisible",
+      "setTabName",
+      "setAuditShop",
+      "setAuditVisible"
+    ]),
     searchShop1() {
       this.setShops1({});
     },
@@ -224,21 +231,26 @@ export default {
       //   console.log(targetName.name);
       if (targetName.name == "first") {
         this.setTabName("first");
-        this.setShops({ page: 1, rows: 5, type: "storeStatus", value: "1" });
+        this.setShops1();
       } else {
         this.setTabName("second");
-        this.setShops({ page: 1, rows: 5, type: "storeStatus", value: "0" });
+
+        this.setShops2();
+        console.log("1", this.shops);
       }
     },
     handleEdit(index, row) {
       //   console.log(index, row);
       this.setShop(row);
       this.setVisible(true);
+    },
+    handleAudit(index, row) {
+      this.setAuditShop(row);
+      this.setAuditVisible(true);
     }
   },
-
   created() {
-    this.setShops({ page: 1, rows: 5, type: "storeStatus", value: "1" });
+    this.setShops2();
   }
 };
 </script>

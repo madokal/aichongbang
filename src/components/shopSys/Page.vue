@@ -23,16 +23,16 @@ export default {
     ...mapActions(["setShops", "setShops1", "setShops2", "setTabName"]),
     handleCurrentChange(val) {
       if (this.tabName == "first") {
-        console.log("标签1");
-        console.log(this.pagination);
+        // console.log("标签1");
+        // console.log(this.pagination);
         this.setShops1({
           page: val,
           rows: 5
         });
       } else {
-        console.log("标签2");
-        console.log(this.pagination);
-        console.log(val,"页码");
+        // console.log("标签2");
+        // console.log(this.pagination);
+        // console.log(val,"页码");
         this.setShops2({
           page: val,
           rows: 5

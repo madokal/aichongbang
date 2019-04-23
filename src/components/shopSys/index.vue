@@ -1,6 +1,7 @@
 <template>
     <div>
        <UpdateShop></UpdateShop>
+       <AuditShop></AuditShop>
       <ShopsList></ShopsList>
       <Page></Page>
     </div>
@@ -9,6 +10,7 @@
 <script>
 import ShopsList from "./ShopsList";
 import UpdateShop from "./UpdateShop";
+import AuditShop from "./AuditShop";
 import Page from "./Page";
 
 export default {
@@ -18,7 +20,8 @@ export default {
   components: {
     ShopsList,
     UpdateShop,
-    Page
+    Page,
+    AuditShop
   },
   methods: {}
 };
