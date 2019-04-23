@@ -1,10 +1,12 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 
-import Login from "./components/login";
+// import Login from "./components/login";
 import Register from "./components/register";
 import Manage from "./components/manage";
-import Order from "./components/order";
+// import Order from "./components/order";
+import ProductOrder from "./components/order/productOrder";
+import ServeOrder from "./components/order/serveOrder";
 import PetMaster from "./components/petMaster";
 import Product from "./components/product";
 import Service from "./components/service";
@@ -30,14 +32,14 @@ const routes = [
       { path: "/manage/supplier", component: Supplier }
 
     ]
-  },{
+  }, {
     path: "/shopManage",
     component: ShopManage,
     children: [
       { path: "/shopManage/product", component: Product },
       { path: "/shopManage/service", component: Service },
-      { path: "/shopManage/order", component: Order }
-
+      {path: "/shopManage/order/productOrder", component: ProductOrder},
+      {path: "/shopManage/order/serveOrder", component: ServeOrder},
     ]
   }
 ];

@@ -5,6 +5,7 @@ import newModule from './newModule.js'
 import studentModule from './studentModule.js'
 import shops from './shops.js'
 
+import orderModule from "./orderModule"
 Vue.use(Vuex);
 export default new Vuex.Store({
   strict:true,
@@ -12,6 +13,7 @@ export default new Vuex.Store({
     productModule,
     newModule,
     studentModule,
-    shops
+    shops,
+    orderModule
   }
 });
