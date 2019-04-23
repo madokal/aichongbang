@@ -1,12 +1,31 @@
 <template>
-  <div>
-    <h1>门店管理</h1>
-  </div>
+    <div>
+       <UpdateShop></UpdateShop>
+       <AuditShop></AuditShop>
+      <ShopsList></ShopsList>
+      <Page></Page>
+    </div>
 </template>
 
 <script>
-export default {};
+import ShopsList from "./ShopsList";
+import UpdateShop from "./UpdateShop";
+import AuditShop from "./AuditShop";
+import Page from "./Page";
+
+export default {
+  data() {
+    return {};
+  },
+  components: {
+    ShopsList,
+    UpdateShop,
+    Page,
+    AuditShop
+  },
+  methods: {}
+};
 </script>
 
-<style scoped>
+<style>
 </style>
