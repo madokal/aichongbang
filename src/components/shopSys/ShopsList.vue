@@ -3,10 +3,10 @@
     <div>
         <el-tabs v-model="tabName1" type="border-card" @tab-click="clickTab">
             <el-tab-pane label="已审核门店" name="first">
-                 <SearchShop :search="this.searchShop1"></SearchShop>
+                 <SearchShop :search="this.searchShopsed"></SearchShop>
                 <div>
                     <el-table
-                        :data="shops"
+                        :data="shopsed"
                         height="350"
                         border
                        
@@ -95,10 +95,10 @@
             </div>
         </el-tab-pane>
    <el-tab-pane label="未审核门店" name="second" >
-        <SearchShop :search="this.searchShop2"></SearchShop>
+        <SearchShop :search="this.searchNoshops"></SearchShop>
                 <div>
                     <el-table
-                        :data="shops"
+                        :data="noshops"
                         height="350"
                         border
                         style="width: 100%">
@@ -191,6 +191,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import SearchShop from "./SearchShop";
 import { createNamespacedHelpers } from "vuex";
 const { mapState, mapActions, mapMutations } = createNamespacedHelpers("shops");
@@ -202,7 +203,7 @@ export default {
     SearchShop
   },
   computed: {
-    ...mapState(["shops", "tabName", "searchInfo", "visible"]),
+    ...mapState(["noshops", "shopsed", "tabName", "searchInfo"]),
     tabName1: {
       set(tabName) {
         this.setTabName(tabName);
@@ -213,32 +214,43 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["setShops", "setShops1", "setShops2"]),
+    ...mapActions([
+      "setShopsed",
+      "setNoshops",
+      "setSearchShopsed",
+      "setSearchNoshops"
+    ]),
     ...mapMutations([
       "setShop",
       "setVisible",
       "setTabName",
       "setAuditShop",
-      "setAuditVisible"
+      "setAuditVisible",
+      "setPagination"
     ]),
-    searchShop1() {
-      this.setShops1({});
-    },
-    searchShop2() {
-      this.setShops2({});
-    },
+
     clickTab(targetName) {
       //   console.log(targetName.name);
+
       if (targetName.name == "first") {
         this.setTabName("first");
-        this.setShops1();
+        this.setShopsed();
       } else {
         this.setTabName("second");
-
-        this.setShops2();
-        console.log("1", this.shops);
+        this.setNoshops();
       }
     },
+    searchShopsed() {
+      console.log(this.searchInfo);
+      this.setSearchShopsed();
+    },
+    searchNoshops() {
+      console.log(this.searchInfo);
+      if (this.searchInfo.type && this.searchInfo.value) {
+        this.setSearchNoshops();
+      }
+    },
+
     handleEdit(index, row) {
       //   console.log(index, row);
       this.setShop(row);
@@ -250,7 +262,7 @@ export default {
     }
   },
   created() {
-    this.setShops2();
+    this.setShopsed();
   }
 };
 </script>

@@ -21,7 +21,7 @@
           <el-input v-model="ruleForm2.permitNum" style="width:250px"></el-input>
       </el-form-item>
       <el-form-item label="营业执照图片：" prop="permitImage" >
-        <div style="width:250px;border:1px solid gray;padding:10px;box-sizing:border-box">
+        <div style="width:250px;border:1px solid #e5e5e5;padding:10px;box-sizing:border-box">
         <el-upload
           class="upload-demo"
           action="" 
@@ -37,7 +37,7 @@
           <el-input v-model="ruleForm2.legalPerson" style="width:250px"></el-input>
       </el-form-item>
       <el-form-item label="头图：" prop="logo" >
-        <div style="width:250px;border:1px solid gray;padding:10px;box-sizing:border-box" >
+        <div style="width:250px;border:1px solid #e5e5e5;padding:10px;box-sizing:border-box" >
         <el-upload
           class="upload-demo"
           action="" 
