@@ -6,7 +6,7 @@
                  <SearchShop :search="this.searchShop1"></SearchShop>
                 <div>
                     <el-table
-                        :data="stores"
+                        :data="shops"
                         height="350"
                         border
                         style="width: 100%">
@@ -88,7 +88,6 @@
                                 size="mini"
                                 type="primary"
                                 @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-                          
                         </template>
                     </el-table-column>
                 </el-table>
@@ -98,7 +97,7 @@
         <SearchShop :search="this.searchShop2"></SearchShop>
                 <div>
                     <el-table
-                        :data="stores"
+                        :data="shops"
                         height="350"
                         border
                         style="width: 100%">
@@ -204,13 +203,13 @@ export default {
     SearchShop
   },
   computed: {
-    ...mapState(["stores", "searchInfo"])
+    ...mapState(["shops", "searchInfo","visible"])
   },
   methods: {
-    ...mapActions(["setStores","setStores1","setStores2"]),
-    ...mapMutations([]),
+    ...mapActions(["setShops", "setShops1", "setShops2"]),
+    ...mapMutations(["setShop","setVisible"]),
     searchShop1() {
-      this.setStores1({
+      this.setShops1({
         page: 1,
         rows: 5,
         type: this.searchInfo.type,
@@ -218,7 +217,7 @@ export default {
       });
     },
     searchShop2() {
-      this.setStores2({
+      this.setShops2({
         page: 1,
         rows: 5,
         type: this.searchInfo.type,
@@ -228,14 +227,20 @@ export default {
     clickTab(targetName) {
       //   console.log(targetName.name);
       if (targetName.name == "first") {
-        this.setStores({ page: 1, rows: 3, type: "storeStatus", value: "1" });
+        this.setShops({ page: 1, rows: 3, type: "storeStatus", value: "1" });
       } else {
-        this.setStores({ page: 1, rows: 3, type: "storeStatus", value: "0" });
+        this.setShops({ page: 1, rows: 3, type: "storeStatus", value: "0" });
       }
+    },
+    handleEdit(index, row) {
+    //   console.log(index, row);
+      this.setShop(row);
+      this.setVisible(true);
     }
   },
+
   created() {
-    this.setStores({ page: 1, rows: 3, type: "storeStatus", value: "1" });
+    this.setShops({ page: 1, rows: 3, type: "storeStatus", value: "1" });
   }
 };
 </script>

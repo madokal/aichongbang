@@ -169,7 +169,10 @@ export default {
               tel: this.ruleForm2.tel,
               legalPerson: this.ruleForm2.legalPerson,
               special: this.ruleForm2.special,
-              storeStatus: "0"
+              storeStatus: "0",
+              workers:[],
+              VIPlevel:"0",
+              commission:"1%",
             }
           }).then(res => {
             this.$router.push("/login");

@@ -2,26 +2,37 @@ import axios from "axios";
 export default {
     namespaced: true,
     state: {
-        stores: [],
+        shops: [],
+        shop: {
+            VIPlevel: "",
+            commission: ""
+        },
         pagination: {},
         searchInfo: {
             type: "",
             value: ""
         },
+        visible: false,
     },
     mutations: {
-        setStoresAsync(state, stores) {
-            state.stores = stores;
+        setShops(state, shops) {
+            state.shops = shops;
+        },
+        setShop(state, shop) {
+            state.shop = shop;
         },
         setPagination(state, pagination) {
             state.pagination = pagination;
         },
         setSearchInfo(state, searchInfo) {
             state.searchInfo = searchInfo;
-        }
+        },
+        setVisible(state, visible) {
+            state.visible = visible;
+        },
     },
     actions: {
-        setStores({ commit }, rule = {}) {
+        setShops({ commit }, rule = {}) {
             let page = rule.page || 1;
             let rows = rule.rows || 5;
             let type = rule.type || "";
@@ -31,11 +42,11 @@ export default {
                 url: "/shopSys",
                 params: { page, rows, type, value }
             }).then(res => {
-                commit("setStoresAsync", res.data.rows);
+                commit("setShops", res.data.rows);
                 commit("setPagination", res.data);
             });
         },
-        setStores1({ commit }, rule = {}) {
+        setShops1({ commit }, rule = {}) {
             let page = rule.page || 1;
             let rows = rule.rows || 5;
             let type = rule.type || "";
@@ -45,18 +56,18 @@ export default {
                 url: "/shopSys",
                 params: { page, rows, type, value }
             }).then(res => {
-                let stores = res.data.rows;
-                let newStores = [];
-                for (let i of stores) {
+                let shops = res.data.rows;
+                let newShops = [];
+                for (let i of shops) {
                     if (i.storeStatus == 1) {
-                        newStores.push(i)
+                        newShops.push(i)
                     }
                 }
-                commit("setStoresAsync", newStores);
+                commit("setShops", newShops);
                 commit("setPagination", res.data);
             });
         },
-        setStores2({ commit }, rule = {}) {
+        setShop2({ commit }, rule = {}) {
             let page = rule.page || 1;
             let rows = rule.rows || 5;
             let type = rule.type || "";
@@ -66,14 +77,14 @@ export default {
                 url: "/shopSys",
                 params: { page, rows, type, value }
             }).then(res => {
-                let stores = res.data.rows;
-                let newStores = [];
-                for (let i of stores) {
+                let shops = res.data.rows;
+                let newShops = [];
+                for (let i of shops) {
                     if (i.storeStatus == 0) {
                         newStores.push(i)
                     }
                 }
-                commit("setStoresAsync", newStores);
+                commit("setShops", newShops);
                 commit("setPagination", res.data);
             });
         }

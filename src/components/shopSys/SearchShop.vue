@@ -1,5 +1,5 @@
 <template>
-     <div>
+     <div style="margin-bottom:10px">
         <el-input placeholder="请输入内容" v-model="value" class="input-with-select">
           <el-select v-model="type" slot="prepend" placeholder="请选择" class="select-type">
             <el-option label="店名" value="name"></el-option>
@@ -12,7 +12,6 @@
 </template>
 
 <script>
-// import { mapActions, mapMutations } from "vuex";
 import { createNamespacedHelpers } from "vuex";
 const { mapActions, mapMutations, mapState } = createNamespacedHelpers("shops");
 export default {
@@ -46,7 +45,6 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["setStores"]),
     ...mapMutations(["setSearchInfo"])
   }
 };
