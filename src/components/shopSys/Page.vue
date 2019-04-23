@@ -5,7 +5,6 @@
           layout="prev, pager, next"
           :page-size='5'
           :total="pagination.total"
-          :current-page="pagination.curpage"
           @current-change="handleCurrentChange">
         </el-pagination>
     </div>
@@ -20,23 +19,17 @@ export default {
     ...mapState(["pagination", "noshops", "shopsed", "tabName"])
   },
   methods: {
-    ...mapActions(["setShopsed"]),
+    ...mapActions(["setShopsed","setNoshops"]),
     ...mapMutations(["setNoshopsAy", "setShopsedAy"]),
-    page(arr, page) {
-      let start = (page - 1) * 5;
-      let end = page * 5;
-      let newArr = arr.slice(start, end);
-      return newArr;
-    },
-    handleCurrentChange(val) {
 
+    handleCurrentChange(val) {
       if (this.tabName == "first") {
         console.log("标签1");
         // console.log(this.pagination);
-        let arr = this.shopsed;
-        console.log(this.page(arr, val),"截取");
+        this.setShopsed({page:val})
       } else {
         // console.log("标签2");
+        this.setNoshops({page:val})
       }
     },
     created() {

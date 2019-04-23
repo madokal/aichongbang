@@ -228,10 +228,7 @@ export default {
       "setAuditVisible",
       "setPagination"
     ]),
-
     clickTab(targetName) {
-      //   console.log(targetName.name);
-
       if (targetName.name == "first") {
         this.setTabName("first");
         this.setShopsed();
@@ -241,13 +238,15 @@ export default {
       }
     },
     searchShopsed() {
-      console.log(this.searchInfo);
+      //   console.log(this.searchInfo);
       this.setSearchShopsed();
     },
     searchNoshops() {
-      console.log(this.searchInfo);
+      //   console.log(this.searchInfo);
       if (this.searchInfo.type && this.searchInfo.value) {
         this.setSearchNoshops();
+      } else {
+        this.setNoshops();
       }
     },
 

@@ -20,10 +20,10 @@ export default {
         auditVisible: false,
     },
     mutations: {
-        setNoshopsAy(state, noshops) {
+        setNoshops(state, noshops) {
             state.noshops = noshops;
         },
-        setShopsedAy(state, shopsed) {
+        setShopsed(state, shopsed) {
             state.shopsed = shopsed;
         },
         setShop(state, shop) {
@@ -50,23 +50,31 @@ export default {
     },
     actions: {
         setShopsed({ commit, state }, rule = {}) {
+            let page = rule.page || 1;
             axios({
                 method: "get",
                 url: "/shopSys/shopsed",
             }).then(res => {
-                commit("setShopsedAy", res.data);
                 let total = res.data.length;
-                commit("setPagination", {total});
+                let start = (page - 1) * 5;
+                let end = page * 5;
+                let newArr = res.data.slice(start, end);
+                commit("setShopsed", newArr);
+                commit("setPagination", { total });
             });
         },
         setNoshops({ commit, state }, rule = {}) {
+            let page = rule.page || 1;
             axios({
                 method: "get",
                 url: "/shopSys/noshops",
             }).then(res => {
-                commit("setNoshopsAy", res.data);
                 let total = res.data.length;
-                commit("setPagination", {total});
+                let start = (page - 1) * 5;
+                let end = page * 5;
+                let newArr = res.data.slice(start, end);
+                commit("setNoshops", newArr);
+                commit("setPagination", { total });
             });
         },
         setSearchShopsed({ commit, state }, rule = {}) {
@@ -88,7 +96,7 @@ export default {
                 }
                 commit("setShopsed", newShops);
                 let total = newShops.length;
-                commit("setPagination", {total});
+                commit("setPagination", { total });
             });
         },
         setSearchNoshops({ commit, state }, rule = {}) {
@@ -110,7 +118,7 @@ export default {
                 }
                 commit("setNoshops", newShops);
                 let total = newShops.length;
-                commit("setPagination", {total});
+                commit("setPagination", { total });
             });
         },
 
