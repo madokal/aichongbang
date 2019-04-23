@@ -2,95 +2,53 @@ import axios from "axios";
 export default {
   namespaced: true,
   state: {
-    students: [],
-    student: {
-      name: "",
-      age: "",
-      gender: "",
-      id: "",
-      visible: false
-    },
-    userName: "",
-    searchRule: {
-      type: "",
-      value: ""
-    },
-    pagenation: {}
+    petMaster: [],
+    pagination:{},
+    petMasterinfor:{},
+    // visible:false
   },
   mutations: {
-    setStudents(state, students) {
-      state.students = students;
+    setPetMaster(state, petMaster) {
+      state.petMaster = petMaster;
     },
-    setUpdateStuVis(state, visible) {
-      state.student = { ...state.student, visible };
+    setPagination(state, pagination) {
+      state.pagination = pagination;
     },
-    setStudent(state, student) {
-      state.student = { ...student, visible: true };
+    setPetMasterinfor(state,petMasterinfor){
+      state.petMasterinfor = petMasterinfor;
     },
-    setSearchRule(state, searchRule) {
-      state.searchRule = searchRule;
-    },
-    setPagenation(state, pagenation) {
-      state.pagenation = pagenation;
-    },
-    setUserName(state, userName) {
-      state.userName = userName;
-    }
+    // setVisible(state,boolean){
+    //   state.visible = boolean;
+    // }
   },
   actions: {
-    getStudents({ commit }, rule = {}) {
-      let page = rule.page || 1;
-      let rows = rule.rows || 5;
-      let type = rule.type || "";
-      let value = rule.value || "";
-      axios({
-        method: "get",
-        url: "/students",
-        params: { page, rows, type, value }
-      }).then(res => {
-        commit("setStudents", res.data.rows);
-        commit("setPagenation", res.data);
-      });
+    setPetMaster({
+      commit
+    },payload = {}){
+        let page = payload.page || 1;
+        let rows = payload.rows || 5;
+        let type = payload.type || 'name';
+        let value = payload.value || '';
+        console.log(payload.page);
+        console.log(page);
+        axios({
+          method: "get",
+          url: "/petMaster",
+          params: { page, rows ,type,value}
+        }).then((res) => {
+             commit('setPetMaster',res.data.rows);
+             commit('setPagination',res.data);
+        });
     },
-    addStudent({ commit }, addMess) {
+    setPetMasterinfor({
+      commit
+    },id){
       axios({
-        method: "post",
-        url: "/students/addStu",
-        data: addMess
-      }).then(res => {});
-    },
-    deleteStudent({ commit }, id) {
-      axios({
-        method: "delete",
-        url: "/students/delete/" + id
-      }).then(res => {});
-    },
-    getUpdateStudent({ commit }, id) {
-      axios({
-        method: "get",
-        url: "/students/" + id
-      }).then(res => {
-        commit("setStudent", res.data);
-      });
-    },
-    removeSession({ commit }) {
-      axios({
-        method: "get",
-        url: "/removeSession"
-      }).then(res => {
-        commit("setUserName", "");
-      });
-    },
-    updateStudent({ commit }, data) {
-      axios({
-        method: "put",
-        url: "/students/" + data._id,
-        data: {
-          name: data.name,
-          age: data.age,
-          gender: data.gender
-        }
-      }).then(res => {});
+           method:'get',
+           url:'/petMaster/'+id
+      }).then((res) =>{
+         commit('setPetMasterinfor',res.data)
+      })
     }
   }
 };
