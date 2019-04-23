@@ -42,13 +42,13 @@ export default {
   methods: {
     ...mapActions(["deleteStudent", "getStudents", "getUpdateStudent"]),
     open2(id) {
-      this.$confirm("此操作将永久删除该学生, 是否继续?", "提示", {
+      this.$confirm("此操作将永久删除该商品信息, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
       })
         .then(() => {
-          this.deleteStudent(id);
+          this.deleteProduct(id);
           this.getStudents({page:this.pagenation.curpage});
         })
         .catch(() => {
