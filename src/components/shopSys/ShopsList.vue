@@ -1,7 +1,7 @@
 <template>
 <div>
     <div>
-        <el-tabs v-model="activeName" type="border-card" @tab-click="clickTab">
+        <el-tabs v-model="tabName1" type="border-card" @tab-click="clickTab">
             <el-tab-pane label="已审核门店" name="first">
                  <SearchShop :search="this.searchShop1"></SearchShop>
                 <div>
@@ -195,52 +195,50 @@ import { createNamespacedHelpers } from "vuex";
 const { mapState, mapActions, mapMutations } = createNamespacedHelpers("shops");
 export default {
   data() {
-    return {
-      activeName: "first"
-    };
+    return {};
   },
   components: {
     SearchShop
   },
   computed: {
-    ...mapState(["shops", "searchInfo","visible"])
+    ...mapState(["shops", "tabName", "searchInfo", "visible"]),
+    tabName1: {
+      set(tabName) {
+        this.setTabName(tabName);
+      },
+      get() {
+        return this.tabName;
+      }
+    }
   },
   methods: {
     ...mapActions(["setShops", "setShops1", "setShops2"]),
-    ...mapMutations(["setShop","setVisible"]),
+    ...mapMutations(["setShop", "setVisible", "setTabName"]),
     searchShop1() {
-      this.setShops1({
-        page: 1,
-        rows: 5,
-        type: this.searchInfo.type,
-        value: this.searchInfo.value
-      });
+      this.setShops1({});
     },
     searchShop2() {
-      this.setShops2({
-        page: 1,
-        rows: 5,
-        type: this.searchInfo.type,
-        value: this.searchInfo.value
-      });
+      this.setShops2({});
     },
     clickTab(targetName) {
       //   console.log(targetName.name);
       if (targetName.name == "first") {
-        this.setShops({ page: 1, rows: 3, type: "storeStatus", value: "1" });
+        this.setTabName("first");
+        this.setShops({ page: 1, rows: 5, type: "storeStatus", value: "1" });
       } else {
-        this.setShops({ page: 1, rows: 3, type: "storeStatus", value: "0" });
+        this.setTabName("second");
+        this.setShops({ page: 1, rows: 5, type: "storeStatus", value: "0" });
       }
     },
     handleEdit(index, row) {
-    //   console.log(index, row);
+      //   console.log(index, row);
       this.setShop(row);
       this.setVisible(true);
     }
   },
 
   created() {
-    this.setShops({ page: 1, rows: 3, type: "storeStatus", value: "1" });
+    this.setShops({ page: 1, rows: 5, type: "storeStatus", value: "1" });
   }
 };
 </script>
