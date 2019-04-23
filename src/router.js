@@ -18,6 +18,7 @@ Vue.use(VueRouter);
 const routes = [
   { path: "/", component: Manage },
   { path: "/register", component: Register },
+  { path: "/login", component: Login },
   { path: "/shopApply", component: ShopApply },
   {
     path: "/manage",
