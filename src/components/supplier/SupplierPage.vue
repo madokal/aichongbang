@@ -5,6 +5,7 @@
   layout="prev, pager, next"
   :page-size="pagination.eachpage"
   :total="pagination.total"
+  :current-page="pagination.curpage"
   @current-change="change">
 </el-pagination>
 </div>

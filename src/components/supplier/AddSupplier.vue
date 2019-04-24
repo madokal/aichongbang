@@ -24,9 +24,9 @@
        <el-form-item label="价格">
         <el-input type="text" v-model="price" autocomplete="off"></el-input>
       </el-form-item>
-       <el-form-item label="产地">
+       <!-- <el-form-item label="产地">
         <el-input type="text" v-model="produce" autocomplete="off"></el-input>
-      </el-form-item>
+      </el-form-item> -->
           <el-form-item>
       <el-button @click="add">确定</el-button>
     <el-button @click="cancle">取消</el-button>
