@@ -33,8 +33,6 @@ const routes = [
   { path: "/register", component: Register },
   { path: "/login", component: Login },
   { path: "/shopApply", component: ShopApply },
-  { path: "/shopApplying", component: ShopApplying },
-  { path: "/shopApplyed", component: shopApplyed },
   {
     path: "/manage",
     component: Manage,
