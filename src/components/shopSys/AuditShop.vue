@@ -1,0 +1,115 @@
+<template>
+     <div>
+        <el-dialog title="审核门店" :visible.sync="updateAuditVisible" width="40%" :before-close="close">
+          <el-form  label-width="140px">
+            <el-form-item label="店名：">
+                <el-input v-model="auditShop.name" :disabled="true" style="width:250px"></el-input>
+            </el-form-item>
+            <el-form-item label="营业地址：">
+                <el-input v-model="auditShop.permitAddr" :disabled="true" style="width:250px"></el-input>
+            </el-form-item>
+            <el-form-item label="营业执照号码：">
+                <el-input v-model="auditShop.permitNum" :disabled="true" style="width:250px"></el-input>
+            </el-form-item>
+            <el-form-item label="营业执照图片：">
+                <div style="width:250px;border:1px solid gray;padding:10px;box-sizing:border-box">
+       
+                </div>
+            </el-form-item>
+            <el-form-item label="法人：">
+                <el-input v-model="auditShop.legalPerson" :disabled="true" style="width:250px"></el-input>
+            </el-form-item>
+            <el-form-item label="头图：">
+                <div style="width:250px;border:1px solid gray;padding:10px;box-sizing:border-box" >
+       
+                </div>
+            </el-form-item>
+            <el-form-item label="联系电话：">
+                <el-input v-model="auditShop.tel" :disabled="true" style="width:250px"></el-input>
+            </el-form-item>
+            <el-form-item label="特色：">
+                <el-input v-model="auditShop.special" :disabled="true" style="width:250px"></el-input>
+            </el-form-item>
+            <el-form-item label="定位：">
+                <el-input type="password" :disabled="true" v-model="auditShop.confirm" style="width:250px"></el-input>
+            </el-form-item>
+          </el-form>
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="setAuditVisible(false)">取 消</el-button>
+            <el-button type="primary" @click="auditBtn(auditShop._id)" >确定审核</el-button>
+          </div>
+        </el-dialog>  
+    </div>
+</template>
+
+<script>
+import axios from "axios";
+import { createNamespacedHelpers } from "vuex";
+const { mapState, mapActions, mapMutations } = createNamespacedHelpers("shops");
+export default {
+  computed: {
+    ...mapState(["auditShop", "auditVisible", "pagination"]),
+    updateAuditVisible: {
+      set(auditVisible) {
+        this.setAuditVisible(auditVisible);
+      },
+      get() {
+        return this.auditVisible;
+      }
+    },
+    VIPlevel: {
+      set(VIPlevel) {
+        this.setShop({
+          ...this.shop,
+          VIPlevel
+        });
+      },
+      get() {
+        return this.shop.VIPlevel;
+      }
+    },
+    commission: {
+      set(commission) {
+        this.setShop({
+          ...this.shop,
+          commission
+        });
+      },
+      get() {
+        return this.shop.commission;
+      }
+    },
+    storeStatus: {
+      set(storeStatus) {
+        this.setShop({
+          ...this.shop,
+          storeStatus
+        });
+      },
+      get() {
+        return this.shop.storeStatus;
+      }
+    }
+  },
+  methods: {
+    ...mapMutations(["setAuditVisible"]),
+    ...mapActions(["setNoshops"]),
+    auditBtn(id) {
+      axios({
+        method: "put",
+        url: "/shopSys/auditshop/" + id,
+        data: { storeStatus: 1 }
+      }).then(() => {
+        this.setNoshops();
+        this.setAuditVisible(false);
+      });
+    },
+    close() {
+      this.setAuditVisible(false);
+    }
+  }
+};
+</script>
+
+<style scoped>
+</style>
