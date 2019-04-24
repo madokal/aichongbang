@@ -16,6 +16,9 @@ import ShopManage from "./components/shopManage";
 import ShopSys from "./components/shopSys";
 import Supplier from "./components/supplier";
 import UserSys from "./components/userSys";
+import shopApply from "./components/shopApply";
+import ShopApplying from "./components/shopApplying";
+import ShopApplyed from "./components/shopApplyed";
 import ManageCityServeTotal from "./components/statistics/manageCityServeTotal";
 import ManageCityTradeTotal from "./components/statistics/manageCityTradeTotal";
 import ManageServeTotal from "./components/statistics/manageServeTotal";
@@ -24,12 +27,16 @@ import MapCityShopStatistics from "./components/statistics/mapCityShopStatistics
 import ShopServeTotal from "./components/statistics/shopServeTotal";
 import ShopTradeTotal from "./components/statistics/shopTradeTotal";
 
+
 Vue.use(VueRouter);
 const routes = [
   { path: "/", component: Manage },
   { path: "/register", component: Register },
   { path: "/login", component: Login },
   { path: "/shopApply", component: ShopApply },
+  { path: "/shopApplying", component: ShopApplying },
+  { path: "/shopApplyed", component: ShopApplyed },  
+  
   {
     path: "/manage",
     component: Manage,
@@ -48,7 +55,6 @@ const routes = [
       { path: "/shopManage/service", component: Service },
       { path: "/shopManage/serviceType", component: serviceType },
       // { path: "/shopManage/order", component: Order },
-
       { path: "/shopManage/order/productOrder", component: ProductOrder },
       { path: "/shopManage/order/serveOrder", component: ServeOrder },
       { path: "/shopManage/statistics/manageCityServeTotal", component: ManageCityServeTotal },
