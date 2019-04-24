@@ -45,6 +45,8 @@ const routes = [
     children: [
       { path: "/shopManage/product", component: Product },
       { path: "/shopManage/service", component: Service },
+      { path: "/shopManage/order/productOrder", component: ProductOrder },
+      { path: "/shopManage/order/serveOrder", component: ServeOrder },
       { path: "/shopManage/statistics/manageCityServeTotal", component: ManageCityServeTotal },
       { path: "/shopManage/statistics/manageCityTradeTotal", component: ManageCityTradeTotal },
       { path: "/shopManage/statistics/manageServeTotal", component: ManageServeTotal },
