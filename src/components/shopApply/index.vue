@@ -147,6 +147,7 @@ export default {
       this.ruleForm2.logo = res;
     },
     submitForm(formName) {
+      let userId = this.$route.query.id
       this.$refs[formName].validate(valid => {
         if (valid) {
           axios({
@@ -162,12 +163,20 @@ export default {
               storeStatus: "0",
               VIPlevel: "0",
               commission: "1%",
+              workers: [],
               permitImage: this.ruleForm2.permitImage,
               logo: this.ruleForm2.logo,
-              id:this.$route.query
+              id: userId
             }
           }).then(res => {
             this.$router.push("/shopApplying");
+            axios({
+              url: "/userSys/" + userId,
+              method: "put",
+              data: { storeStatus: "待审核" }
+            }).then(res => {
+              console.log(res);
+            });
           });
         } else {
           console.log("error submit!!");
@@ -177,7 +186,7 @@ export default {
     },
     //重置
     resetForm(formName) {
-      console.log(this.$route.query)
+      console.log(this.$route.query);
       this.$refs[formName].resetFields();
     }
   }
