@@ -53,11 +53,20 @@
         <el-input v-model="price" autocomplete="off"></el-input>
       </el-form-item>
 
-      <el-form-item label="图片" :label-width="formLabelWidth">
-        <el-input v-model="pictures" autocomplete="off"></el-input>
+       <el-form-item label="图片" :label-width="formLabelWidth">
+        <el-upload
+          class="avatar-uploader"
+          action="/product/upload"
+          :on-success="handle"
+         >
+          <img v-if="picturesUrl" :src="picturesUrl+product.pictures" class="avatar" >
+          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+       </el-upload>
       </el-form-item>
-      </el-form>
+       
 
+      </el-form>
+ 
     <div slot="footer" class="btn">
       <el-button @click="setUpdateVis(false)">取 消</el-button>
       <el-button type="primary" @click="update(product._id)">确 定</el-button>
@@ -257,11 +266,17 @@ export default {
       this.updateProduct(this.product);
       this.setUpdateVis(false);
       this.getProducts();
+    },
+    handle(response, file, fileList){
+      this.product.pictures=response
     }
+ 
+
   },
   data() {
     return {
-      formLabelWidth: "120px"
+      formLabelWidth: "120px",
+      picturesUrl:"/upload/"
     };
   }
 };

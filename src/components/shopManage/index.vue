@@ -11,7 +11,13 @@
       <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
         <el-menu router :default-active="url" :default-openeds="[`${url}`]">
           <el-menu-item index="/shopManage/product">商品管理</el-menu-item>
-          <el-menu-item index="/shopManage/service">服务管理</el-menu-item>
+          <el-submenu index="1">
+            <template slot="title">服务管理</template>
+            <el-menu-item-group>
+              <el-menu-item index="/shopManage/service">服务列表</el-menu-item>
+              <el-menu-item index="/shopManage/serviceType">服务类型</el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
           <el-submenu index="1">
             <template slot="title">
               订单管理
