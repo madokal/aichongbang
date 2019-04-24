@@ -16,20 +16,33 @@ import { createNamespacedHelpers, mapMutations } from "vuex";
 const { mapState, mapActions } = createNamespacedHelpers("shops");
 export default {
   computed: {
-    ...mapState(["pagination", "noshops", "shopsed", "tabName"])
+    ...mapState(["pagination", "noshops", "shopsed", "tabName", "searchInfo"])
   },
   methods: {
-    ...mapActions(["setShopsed","setNoshops"]),
+    ...mapActions([
+      "setShopsed",
+      "setNoshops",
+      "setSearchShopsed",
+      "setSearchNoshops"
+    ]),
     ...mapMutations(["setNoshopsAy", "setShopsedAy"]),
 
     handleCurrentChange(val) {
       if (this.tabName == "first") {
-        console.log("标签1");
-        // console.log(this.pagination);
-        this.setShopsed({page:val})
+        if (this.searchInfo.type && this.searchInfo.value) {
+          // console.log("搜索分页")
+          this.setSearchShopsed({ page1: val });
+        } else {
+          // console.log("feny")
+          this.setShopsed({ page: val });
+        }
       } else {
-        // console.log("标签2");
-        this.setNoshops({page:val})
+        if (this.searchInfo.type && this.searchInfo.value) {
+          //搜索分页
+          this.setSearchNoshops({ page1: val });
+        } else {
+          this.setNoshops({ page: val });
+        }
       }
     },
     created() {

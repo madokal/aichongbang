@@ -20,33 +20,31 @@
       <el-form-item label="营业执照号码：" prop="permitNum">
           <el-input v-model="ruleForm2.permitNum" style="width:250px"></el-input>
       </el-form-item>
-      <el-form-item label="营业执照图片：" prop="permitImage" >
-        <div style="width:250px;border:1px solid #e5e5e5;padding:10px;box-sizing:border-box">
-        <el-upload
-          class="upload-demo"
-          action="" 
-          :on-preview="handlePreview"
-          :on-remove="handleRemove"
-          list-type="picture">
-            <el-button size="small" type="primary">点击上传</el-button>
-            <div slot="tip" class="el-upload__tip" style="width:250px">只能上传jpg/png文件，且不超过500kb</div>
-        </el-upload>
-        </div>
-      </el-form-item>
       <el-form-item label="法人：" prop="legalPerson" >
           <el-input v-model="ruleForm2.legalPerson" style="width:250px"></el-input>
       </el-form-item>
+           <el-form-item label="营业执照图片：" prop="permitImage" >
+        <div style="width:250px;border:1px solid #e5e5e5;padding:10px;box-sizing:border-box">
+          <el-upload
+            class="avatar-uploader"
+            action="/shopApply/upload"
+            :limit="1"
+            :on-success="handlePermitImageSuccess">
+            <img v-if="permitImageUrl" :src="permitImageUrl" style="width:100%" class="avatar">
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+          </el-upload>
+        </div>
+      </el-form-item>
       <el-form-item label="头图：" prop="logo" >
         <div style="width:250px;border:1px solid #e5e5e5;padding:10px;box-sizing:border-box" >
-        <el-upload
-          class="upload-demo"
-          action="" 
-          :on-preview="handlePreview"
-          :on-remove="handleRemove"
-          list-type="picture">
-            <el-button size="small" type="primary">点击上传</el-button>
-            <div slot="tip" class="el-upload__tip" style="width:250px">只能上传jpg/png文件，且不超过500kb</div>
-        </el-upload>
+          <el-upload
+            class="avatar-uploader"
+            action="/shopApply/upload"
+            :limit="1"
+            :on-success="handleLogoImageSuccess">
+            <img v-if="logoImageUrl" :src="logoImageUrl" style="width:100%" class="avatar">
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+          </el-upload>
         </div>
       </el-form-item>
        <el-form-item label="联系电话：" prop="tel" >
@@ -55,19 +53,21 @@
       <el-form-item label="特色：" prop="special" >
           <el-input v-model="ruleForm2.special" style="width:250px"></el-input>
       </el-form-item>
-      <el-form-item label="特色：" prop="VIPlevel" >
-          <el-input v-model="ruleForm2.special" style="width:250px"></el-input>
-      </el-form-item>
+ 
       <el-form-item label="定位：" prop="location">
           <el-input type="password" v-model="ruleForm2.confirm" style="width:250px"></el-input>
       </el-form-item>
+     
+        <el-form-item label="定位：" prop="location" style="visibility: hidden;">
+          <el-input type="password" v-model="ruleForm2.confirm" style="width:250px"></el-input>
+        </el-form-item>
+    
       <div>
       <el-form-item class="bottom">
           <el-button type="primary" @click="submitForm('ruleForm2')">提交</el-button>
           <el-button @click="resetForm('ruleForm2')">重置</el-button>
       </el-form-item>
       </div>
-    
 </el-form>
 </el-card>
   </div>
@@ -77,14 +77,17 @@ import axios from "axios";
 export default {
   data() {
     return {
-      fileList: [],
+      permitImageUrl: "",
+      logoImageUrl: "",
       ruleForm2: {
         name: "",
         permitNum: "",
         permitAddr: "",
         tel: "",
         legalPerson: "",
-        special: ""
+        special: "",
+        permitImage: "",
+        logo: ""
       },
       rules2: {
         name: [
@@ -135,27 +138,14 @@ export default {
     };
   },
   methods: {
-    handlePreview(file, fileList) {
-      console.log(file, fileList);
+    handlePermitImageSuccess(res, file) {
+      this.permitImageUrl = URL.createObjectURL(file.raw);
+      this.ruleForm2.permitImage = res;
     },
-    handleRemove(file) {
-      console.log(file);
+    handleLogoImageSuccess(res, file) {
+      this.logoImageUrl = URL.createObjectURL(file.raw);
+      this.ruleForm2.logo = res;
     },
-    // validateTel(rule, value, callback) {
-    //   axios({
-    //     method: "get",
-    //     url: "/users",
-    //     params: {
-    //       phone: value
-    //     }
-    //   }).then(res => {
-    //     if (res.data.status == 0) {
-    //       callback("手机号重复");
-    //     } else {
-    //       callback();
-    //     }
-    //   });
-    // },
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
@@ -170,9 +160,11 @@ export default {
               legalPerson: this.ruleForm2.legalPerson,
               special: this.ruleForm2.special,
               storeStatus: "0",
-              workers:[],
-              VIPlevel:"0",
-              commission:"1%",
+              workers: [],
+              VIPlevel: "0",
+              commission: "1%",
+              permitImage:this.ruleForm2.permitImage,
+              logo: this.ruleForm2.logo
             }
           }).then(res => {
             this.$router.push("/login");
@@ -217,22 +209,22 @@ export default {
 .upload-demo {
   width: "250px";
 }
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
 .avatar-uploader .el-upload:hover {
   border-color: #409eff;
 }
-
 .avatar-uploader-icon {
-  width: "250px";
   font-size: 28px;
   color: #8c939d;
   width: 178px;
   height: 178px;
   line-height: 178px;
   text-align: center;
-}
-.avatar {
-  width: 178px;
-  height: 178px;
-  display: block;
 }
 </style>
