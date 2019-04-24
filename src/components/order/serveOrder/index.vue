@@ -75,6 +75,24 @@ export default {
     },
     trueClick(row){
       console.log(row,"true")
+      this.$prompt("请输入订单验证码", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        inputValidator: function(value) {
+          console.log(value, 123);
+          if (value == row.orderNum) {
+            return true;
+          } else {
+            return false;
+          }
+        },
+        inputErrorMessage: "验证码输入错误!!!"
+      }).then(({ value }) => {
+        this.$message({
+          type: "success",
+          message: "你的验证码是: " + value + ", 验证成功,订单交易已完成 "
+        });
+      });
     }
   }
 };
