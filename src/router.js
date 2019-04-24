@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 
-// import Login from "./components/login";
+import Login from "./components/login";
 import Register from "./components/register";
 import Manage from "./components/manage";
 // import Order from "./components/order";
