@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 
-// import Login from "./components/login";
+import Login from "./components/login";
 import Register from "./components/register";
 import Manage from "./components/manage";
 // import Order from "./components/order";
@@ -47,7 +47,7 @@ const routes = [
       { path: "/shopManage/product", component: Product },
       { path: "/shopManage/service", component: Service },
       { path: "/shopManage/serviceType", component: serviceType },
-      { path: "/shopManage/order", component: Order },
+      // { path: "/shopManage/order", component: Order },
 
       { path: "/shopManage/order/productOrder", component: ProductOrder },
       { path: "/shopManage/order/serveOrder", component: ServeOrder },
