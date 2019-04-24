@@ -8,6 +8,7 @@ import Order from "./components/order";
 import PetMaster from "./components/petMaster";
 import Product from "./components/product";
 import Service from "./components/service";
+import serviceType from "./components/serviceType";
 import ShopApply from "./components/shopApply";
 import ShopManage from "./components/shopManage";
 import ShopSys from "./components/shopSys";
@@ -35,6 +36,7 @@ const routes = [
     children: [
       { path: "/shopManage/product", component: Product },
       { path: "/shopManage/service", component: Service },
+      { path: "/shopManage/serviceType", component: serviceType },
       { path: "/shopManage/order", component: Order }
 
     ]
