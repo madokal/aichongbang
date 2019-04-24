@@ -7,7 +7,7 @@
       fixed
       prop="name"
       label="姓名"
-      width="120"
+      width="150"
       align="center">
       <template slot-scope="scope">
           <span> {{scope.row.name}}</span>
@@ -16,7 +16,7 @@
     <el-table-column
       prop="addr"
       label="地址"
-      width="120"  align="center">
+      width="150"  align="center">
        <template slot-scope="scope">
           <span> {{scope.row.addr}}</span>
       </template>
@@ -33,7 +33,7 @@
       fixed
       prop="brand"
       label="商品品牌"
-      width="150" align="center">
+      width="180" align="center">
        <template slot-scope="scope">
           <span> {{scope.row.brand}}</span>
       </template>
@@ -65,7 +65,7 @@
           <span> {{scope.row.price}}</span>
       </template>
     </el-table-column>
-     <el-table-column
+     <!-- <el-table-column
       fixed
       prop="produce"
       label="产地"
@@ -73,7 +73,7 @@
        <template slot-scope="scope">
           <span> {{scope.row.produce}}</span>
       </template>
-    </el-table-column>
+    </el-table-column> -->
     <el-table-column label="操作" width="140" align="center"> 
       <template slot-scope="scope">
         <el-button

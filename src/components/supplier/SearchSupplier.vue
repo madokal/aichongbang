@@ -9,7 +9,7 @@
       <el-option label="商品种类" value="product"></el-option>
       <el-option label="到货时间" value="time"></el-option>
       <el-option label="价格" value="price"></el-option>
-      <el-option label="产地" value="produce"></el-option>
+      <!-- <el-option label="产地" value="produce"></el-option> -->
     </el-select>
     <el-button @click="search" slot="append" icon="el-icon-search"></el-button>
   </el-input>
