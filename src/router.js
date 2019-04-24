@@ -18,7 +18,13 @@ import Supplier from "./components/supplier";
 import UserSys from "./components/userSys";
 import ShopApplying from "./components/shopApplying";
 import shopApplyed from "./components/shopApplyed";
-
+import ManageCityServeTotal from "./components/statistics/manageCityServeTotal";
+import ManageCityTradeTotal from "./components/statistics/manageCityTradeTotal";
+import ManageServeTotal from "./components/statistics/manageServeTotal";
+import ManageTradeTotal from "./components/statistics/manageTradeTotal";
+import MapCityShopStatistics from "./components/statistics/mapCityShopStatistics";
+import ShopServeTotal from "./components/statistics/shopServeTotal";
+import ShopTradeTotal from "./components/statistics/shopTradeTotal";
 
 
 Vue.use(VueRouter);
