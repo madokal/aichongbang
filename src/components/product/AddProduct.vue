@@ -88,32 +88,29 @@
 </template>
 
 <script>
-import axios from "axios"
+import axios from "axios";
 import { createNamespacedHelpers } from "vuex";
 const { mapActions, mapState } = createNamespacedHelpers("productModule");
 export default {
-  computed:{
+  computed: {
     ...mapState(["pagenation"])
   },
-    data() {
+  data() {
     return {
-      pictures: '',
+      pictures: "",
 
       dialogFormVisible: false,
       form: {
-        name: "",
+        name: ""
       },
       formLabelWidth: "120px"
     };
   },
-    methods: {
-    
-   
-      handleSuccess(response, file, fileList){
-         this.pictures="/upload/"+response;
-         this.form.pictures=response
-      },
-
+  methods: {
+    handleSuccess(response, file, fileList) {
+      this.pictures = "/upload/" + response;
+      this.form.pictures = response;
+    },
 
     ...mapActions(["addProduct", "getProducts"]),
     addNo(form) {
@@ -121,58 +118,61 @@ export default {
     },
     //添加功能按钮
     add(form) {
+      let userId = "";
       axios({
+        method: "get",
+        url: "/login/getSession"
+      }).then(res => {
+        let id = res.data._id;
+        axios({
           method: "get",
-          url: "/login/getSession",
-      }).then(res=>{
-          let id=res.data._id
-          axios({
-            method: "get",
-            url:"/product/shop",
-            params:{id}
-          }).then(res=>{
-             console.log(res)
-          })
-      })
-      // let data = { ...this.form };
-      // this.addProduct(data);
-      // this.dialogFormVisible = false;
-      // let page=this.pagenation.curpage;
-      // this.getProducts({page});
+          url: "/product/shop",
+          params: { id }
+        }).then(res => {
+          userId = res.data[0]._id;
+          let data = { ...this.form };
+          data.id = userId;
+          console.log(data);
+          this.addProduct(data);
+          this.dialogFormVisible = false;
+          let page = this.pagenation.curpage;
+           this.getProducts({ page });
+        });
+      });
     }
   }
-}
+};
 </script>
 
 <style>
-.btn{
+.btn {
   text-align: center;
 }
-.div{
+.div {
   display: inline-block;
   margin-right: 14px;
 }
- .avatar-uploader .el-upload {
-    border: 1px dashed #d9d9d9;
-    border-radius: 6px;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-  }
-  .avatar-uploader .el-upload:hover {
-    border-color: #409EFF;
-  }
-  .avatar-uploader-icon {
-    font-size: 28px;
-    color: #8c939d;
-    width: 178px;
-    height: 178px;
-    line-height: 178px;
-    text-align: center;
-  }
-  .avatar {
-    width: 178px;
-    height: 178px;
-    display: block;
-  }
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.avatar-uploader .el-upload:hover {
+  border-color: #409eff;
+}
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  line-height: 178px;
+  text-align: center;
+}
+.avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
+}
 </style>
