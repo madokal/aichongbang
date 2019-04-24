@@ -54,7 +54,7 @@ export default {
         diamond: [
           { required: true, message: "请输入钻石级的价格", trigger: "change" }
         ]
-      },
+      }
     };
   },
   methods: {
@@ -77,7 +77,8 @@ export default {
           }).then(res => {
             if (res.data.status == 1) {
               this.$message.success("增加成功！");
-              this.setServiceTypes({ page: this.pagination.maxpage });
+              this.setServiceTypes();
+              // this.setServiceTypes({ page: this.pagination.maxpage });
             }
           });
           this.dialogVisible = false;

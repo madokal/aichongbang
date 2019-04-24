@@ -175,7 +175,7 @@ export default {
             blacklist
           }
         }).then(res => {
-          this.setPetMaster();
+          this.setPetMaster({page:this.cur_page});
         });
       });
     },
@@ -193,7 +193,7 @@ export default {
             blacklist
           }
         }).then(res => {
-          this.setPetMaster();
+          this.setPetMaster({page:this.cur_page});
         });
       });
     },
@@ -208,12 +208,16 @@ export default {
       console.log("ok");
       console.log(`每页 ${val} 条`);
       this.setPetMaster({ rows: val });
+      this.cur_page = val;
     },
     handleCurrentChange(val) {
       console.log("进来了");
       console.log(`当前页: ${val}`);
+      console.log("到这了")
+      console.log(val);
       this.cur_page = val;
-      this.setPetMaster({ page: val });
+      this.setPetMaster({ page: val});
+
     }
   }
 };
