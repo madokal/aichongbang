@@ -19,6 +19,18 @@
             <el-menu-item index="/shopManage/order/productOrder">商品订单</el-menu-item>
             <el-menu-item index="/shopManage/order/serveOrder">服务订单</el-menu-item>
           </el-submenu>
+          <el-submenu index="2">
+            <template slot="title">
+              统计
+            </template>
+            <el-menu-item index="/shopManage/statistics/manageCityServeTotal">城市服务</el-menu-item>
+            <el-menu-item index="/shopManage/statistics/manageCityTradeTotal">城市商品</el-menu-item>
+            <el-menu-item index="/shopManage/statistics/manageServeTotal">服务统计</el-menu-item>
+            <el-menu-item index="/shopManage/statistics/manageTradeTotal">商品统计</el-menu-item>
+            <el-menu-item index="/shopManage/statistics/mapCityShopStatistics">城市店铺分布</el-menu-item>
+            <el-menu-item index="/shopManage/statistics/shopServeTotal">店铺服务</el-menu-item>
+            <el-menu-item index="/shopManage/statistics/shopTradeTotal">店铺商品</el-menu-item>
+          </el-submenu>
         </el-menu>
       </el-aside>
       <el-main>
