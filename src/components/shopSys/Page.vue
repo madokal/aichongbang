@@ -3,9 +3,8 @@
         <el-pagination
           background
           layout="prev, pager, next"
-          :page-size='pagination.eachpage'
+          :page-size='5'
           :total="pagination.total"
-          :current-page="pagination.curpage"
           @current-change="handleCurrentChange">
         </el-pagination>
     </div>
@@ -13,31 +12,41 @@
 
 <script>
 // import { mapState,mapActions } from 'vuex';
-import { createNamespacedHelpers } from "vuex";
+import { createNamespacedHelpers, mapMutations } from "vuex";
 const { mapState, mapActions } = createNamespacedHelpers("shops");
 export default {
   computed: {
-    ...mapState(["pagination", "searchInfo", "tabName"])
+    ...mapState(["pagination", "noshops", "shopsed", "tabName", "searchInfo"])
   },
   methods: {
-    ...mapActions(["setShops", "setShops1", "setShops2", "setTabName"]),
+    ...mapActions([
+      "setShopsed",
+      "setNoshops",
+      "setSearchShopsed",
+      "setSearchNoshops"
+    ]),
+    ...mapMutations(["setNoshopsAy", "setShopsedAy"]),
+
     handleCurrentChange(val) {
       if (this.tabName == "first") {
-        // console.log("标签1");
-        // console.log(this.pagination);
-        this.setShops1({
-          page: val,
-          rows: 5
-        });
+        if (this.searchInfo.type && this.searchInfo.value) {
+          // console.log("搜索分页")
+          this.setSearchShopsed({ page1: val });
+        } else {
+          // console.log("feny")
+          this.setShopsed({ page: val });
+        }
       } else {
-        // console.log("标签2");
-        // console.log(this.pagination);
-        // console.log(val,"页码");
-        this.setShops2({
-          page: val,
-          rows: 5
-        });
+        if (this.searchInfo.type && this.searchInfo.value) {
+          //搜索分页
+          this.setSearchNoshops({ page1: val });
+        } else {
+          this.setNoshops({ page: val });
+        }
       }
+    },
+    created() {
+      this.setShopsed();
     }
   }
 };

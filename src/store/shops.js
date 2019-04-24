@@ -2,7 +2,9 @@ import axios from "axios";
 export default {
     namespaced: true,
     state: {
-        shops: [],
+        noshops: [],
+        shopsed: [],
+        // shops: [],
         shop: {
             VIPlevel: "",
             commission: ""
@@ -18,8 +20,11 @@ export default {
         auditVisible: false,
     },
     mutations: {
-        setShops(state, shops) {
-            state.shops = shops;
+        setNoshops(state, noshops) {
+            state.noshops = noshops;
+        },
+        setShopsed(state, shopsed) {
+            state.shopsed = shopsed;
         },
         setShop(state, shop) {
             state.shop = shop;
@@ -44,23 +49,37 @@ export default {
         },
     },
     actions: {
-        setShops({ commit, state }, rule = {}) {
+        setShopsed({ commit, state }, rule = {}) {
             let page = rule.page || 1;
-            let rows = rule.rows || 5;
-            let type = state.searchInfo.type;
-            let value = state.searchInfo.value;
             axios({
                 method: "get",
-                url: "/shopSys",
-                params: { page, rows, type, value }
+                url: "/shopSys/shopsed",
             }).then(res => {
-                commit("setShops", res.data.rows);
-                commit("setPagination", res.data);
+                let total = res.data.length;
+                let start = (page - 1) * 5;
+                let end = page * 5;
+                let newArr = res.data.slice(start, end);
+                commit("setShopsed", newArr);
+                commit("setPagination", { total });
             });
         },
-        setShops1({ commit, state }, rule = {}) {
+        setNoshops({ commit, state }, rule = {}) {
             let page = rule.page || 1;
-            let rows = rule.rows || 5;
+            axios({
+                method: "get",
+                url: "/shopSys/noshops",
+            }).then(res => {
+                let total = res.data.length;
+                let start = (page - 1) * 5;
+                let end = page * 5;
+                let newArr = res.data.slice(start, end);
+                commit("setNoshops", newArr);
+                commit("setPagination", { total });
+            });
+        },
+        setSearchShopsed({ commit, state }, rule = {}) {
+            let page = rule.page || 1;
+            let rows = rule.rows || 100;
             let type = state.searchInfo.type;
             let value = state.searchInfo.value;
             axios({
@@ -75,13 +94,18 @@ export default {
                         newShops.push(i)
                     }
                 }
-                commit("setShops", newShops);
-                commit("setPagination", res.data);
+                let page1 = rule.page1 || 1;
+                let start = (page1 - 1) * 5;
+                let end = page1 * 5;
+                let newArr = newShops.slice(start, end);
+                commit("setShopsed", newArr);
+                let total = newShops.length || 0;
+                commit("setPagination", { total });
             });
         },
-        setShops2({ commit, state }, rule = {}) {
+        setSearchNoshops({ commit, state }, rule = {}) {
             let page = rule.page || 1;
-            let rows = rule.rows || 5;
+            let rows = rule.rows || 100;
             let type = state.searchInfo.type;
             let value = state.searchInfo.value;
             axios({
@@ -96,9 +120,15 @@ export default {
                         newShops.push(i)
                     }
                 }
-                commit("setShops", newShops);
-                commit("setPagination", res.data);
+                let page1 = rule.page1 || 1;
+                let start = (page1 - 1) * 5;
+                let end = page1 * 5;
+                let newArr = newShops.slice(start, end);
+                commit("setNoshops", newArr);
+                let total = newShops.length;
+                commit("setPagination", { total });
             });
         },
+
     }
 };

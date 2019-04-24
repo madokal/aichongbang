@@ -93,14 +93,14 @@ export default {
   },
   methods: {
     ...mapMutations(["setAuditVisible"]),
-    ...mapActions(["setShops2"]),
+    ...mapActions(["setNoshops"]),
     auditBtn(id) {
       axios({
         method: "put",
         url: "/shopSys/auditshop/" + id,
         data: { storeStatus: 1 }
       }).then(() => {
-        this.setShops2();
+        this.setNoshops();
         this.setAuditVisible(false);
       });
     },

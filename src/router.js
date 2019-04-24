@@ -13,6 +13,10 @@ import ShopManage from "./components/shopManage";
 import ShopSys from "./components/shopSys";
 import Supplier from "./components/supplier";
 import UserSys from "./components/userSys";
+import ShopApplying from "./components/shopApplying";
+import shopApplyed from "./components/shopApplyed";
+
+
 
 Vue.use(VueRouter);
 const routes = [
@@ -20,6 +24,8 @@ const routes = [
   { path: "/register", component: Register },
   { path: "/login", component: Login },
   { path: "/shopApply", component: ShopApply },
+  { path: "/shopApplying", component: ShopApplying },
+  { path: "/shopApplyed", component: shopApplyed },
   {
     path: "/manage",
     component: Manage,
