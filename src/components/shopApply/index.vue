@@ -160,11 +160,11 @@ export default {
               legalPerson: this.ruleForm2.legalPerson,
               special: this.ruleForm2.special,
               storeStatus: "0",
-              workers: [],
               VIPlevel: "0",
               commission: "1%",
               permitImage: this.ruleForm2.permitImage,
-              logo: this.ruleForm2.logo
+              logo: this.ruleForm2.logo,
+              id:this.$route.query
             }
           }).then(res => {
             this.$router.push("/shopApplying");
@@ -177,6 +177,7 @@ export default {
     },
     //重置
     resetForm(formName) {
+      console.log(this.$route.query)
       this.$refs[formName].resetFields();
     }
   }
@@ -228,3 +229,4 @@ export default {
   text-align: center;
 }
 </style>
+              workers: [],

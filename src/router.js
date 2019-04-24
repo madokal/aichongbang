@@ -16,8 +16,9 @@ import ShopManage from "./components/shopManage";
 import ShopSys from "./components/shopSys";
 import Supplier from "./components/supplier";
 import UserSys from "./components/userSys";
+import shopApply from "./components/shopApply";
 import ShopApplying from "./components/shopApplying";
-import shopApplyed from "./components/shopApplyed";
+import ShopApplyed from "./components/shopApplyed";
 import ManageCityServeTotal from "./components/statistics/manageCityServeTotal";
 import ManageCityTradeTotal from "./components/statistics/manageCityTradeTotal";
 import ManageServeTotal from "./components/statistics/manageServeTotal";
@@ -33,6 +34,9 @@ const routes = [
   { path: "/register", component: Register },
   { path: "/login", component: Login },
   { path: "/shopApply", component: ShopApply },
+  { path: "/shopApplying", component: ShopApplying },
+  { path: "/shopApplyed", component: ShopApplyed },  
+  
   {
     path: "/manage",
     component: Manage,

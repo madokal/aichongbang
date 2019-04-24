@@ -257,7 +257,7 @@ export default {
       }
     },
     searchNoshops() {
-    //   console.log(this.searchInfo);
+      //   console.log(this.searchInfo);
       if (this.searchInfo.type && this.searchInfo.value) {
         this.setSearchNoshops();
         // this.setSearchInfo({});
@@ -273,6 +273,14 @@ export default {
     handleAudit(index, row) {
       this.setAuditShop(row);
       this.setAuditVisible(true);
+      let userId = row.users.$id;
+      console.log(row.users.$id);
+      axios({
+        url: "/userSys/" + userId,
+        method: "put"
+      }).then(res => {
+        console.log(res);
+      });
     }
   },
   created() {
