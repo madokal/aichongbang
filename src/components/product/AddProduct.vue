@@ -88,6 +88,7 @@
 </template>
 
 <script>
+import axios from "axios"
 import { createNamespacedHelpers } from "vuex";
 const { mapActions, mapState } = createNamespacedHelpers("productModule");
 export default {
@@ -120,11 +121,24 @@ export default {
     },
     //添加功能按钮
     add(form) {
-      let data = { ...this.form };
-      this.addProduct(data);
-      this.dialogFormVisible = false;
-      let page=this.pagenation.curpage;
-      this.getProducts({page});
+      axios({
+          method: "get",
+          url: "/login/getSession",
+      }).then(res=>{
+          let id=res.data._id
+          axios({
+            method: "get",
+            url:"/product/shop",
+            params:{id}
+          }).then(res=>{
+             console.log(res)
+          })
+      })
+      // let data = { ...this.form };
+      // this.addProduct(data);
+      // this.dialogFormVisible = false;
+      // let page=this.pagenation.curpage;
+      // this.getProducts({page});
     }
   }
 }
