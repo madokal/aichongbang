@@ -53,7 +53,6 @@ const routes = [
       { path: "/shopManage/service", component: Service },
       { path: "/shopManage/serviceType", component: serviceType },
       // { path: "/shopManage/order", component: Order },
-
       { path: "/shopManage/order/productOrder", component: ProductOrder },
       { path: "/shopManage/order/serveOrder", component: ServeOrder },
       { path: "/shopManage/statistics/manageCityServeTotal", component: ManageCityServeTotal },

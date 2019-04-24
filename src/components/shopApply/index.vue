@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="width:1400px; margin:auto">
     <h1 class="title">门店申请</h1>
    
 <el-card class="box-card">
@@ -163,11 +163,11 @@ export default {
               workers: [],
               VIPlevel: "0",
               commission: "1%",
-              permitImage:this.ruleForm2.permitImage,
+              permitImage: this.ruleForm2.permitImage,
               logo: this.ruleForm2.logo
             }
           }).then(res => {
-            this.$router.push("/login");
+            this.$router.push("/shopApplying");
           });
         } else {
           console.log("error submit!!");
