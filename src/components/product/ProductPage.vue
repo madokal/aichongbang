@@ -6,17 +6,17 @@
 
 <script>
 import { createNamespacedHelpers } from "vuex";
-const { mapActions, mapState } = createNamespacedHelpers("studentModule");
+const { mapActions, mapState } = createNamespacedHelpers("productModule");
 export default {
   computed: {
     ...mapState(["pagenation", "searchRule"])
   },
   methods: {
-    ...mapActions(["getStudents"]),
+    ...mapActions(["getProducts"]),
     page(page) {
       let type = this.searchRule.type || "";
       let value = this.searchRule.value || "";
-      this.getStudents({ page, type, value });
+      this.getProducts({ page, type, value });
     }
   }
 };

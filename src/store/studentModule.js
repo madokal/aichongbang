@@ -29,8 +29,6 @@ export default {
         let rows = payload.rows || 5;
         let type = payload.type || 'name';
         let value = payload.value || '';
-        console.log(payload.page);
-        console.log(page);
         axios({
           method: "get",
           url: "/petMaster",
