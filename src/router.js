@@ -46,11 +46,9 @@ const routes = [
     children: [
       { path: "/shopManage/product", component: Product },
       { path: "/shopManage/service", component: Service },
-<<<<<<< HEAD
       { path: "/shopManage/serviceType", component: serviceType },
-      { path: "/shopManage/order", component: Order }
+      { path: "/shopManage/order", component: Order },
 
-=======
       { path: "/shopManage/order/productOrder", component: ProductOrder },
       { path: "/shopManage/order/serveOrder", component: ServeOrder },
       { path: "/shopManage/statistics/manageCityServeTotal", component: ManageCityServeTotal },
@@ -60,7 +58,6 @@ const routes = [
       { path: "/shopManage/statistics/mapCityShopStatistics", component: MapCityShopStatistics },
       { path: "/shopManage/statistics/shopServeTotal", component: ShopServeTotal },
       { path: "/shopManage/statistics/shopTradeTotal", component: ShopTradeTotal },
->>>>>>> 52935476ca36312b4d45ecc9cc75fad28bf40fbb
     ]
   }
 ];
