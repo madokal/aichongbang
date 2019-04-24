@@ -25,7 +25,7 @@ const { mapState, mapActions, mapMutations } = createNamespacedHelpers(
 );
 export default {
   computed: {
-    ...mapState(["shop", "visible", "pagination"]),
+    ...mapState(["shop", "visible"]),
     updateVisible: {
       set(visible) {
         this.setVisible(visible);
@@ -70,7 +70,7 @@ export default {
   },
   methods: {
     ...mapMutations(["setShop", "setVisible"]),
-    ...mapActions(["setShops1"]),
+    ...mapActions(["setShopsed"]),
     updateShop(id) {
       console.log(11)
         if (this.shop.VIPlevel && this.shop.commission) {
@@ -79,10 +79,7 @@ export default {
             url: "/shopSys/" + id,
             data: this.shop
           }).then(() => {
-            this.setShops1({
-              // page: this.pagination.curpage,
-              // rows: this.pagination.eachpage
-            });
+            this.setShopsed();
             this.setVisible(false);
           });
         } else {

@@ -3,8 +3,9 @@
     <el-header style="display:flex; font-size: 12px; justify-content: space-between;">
       <h1>系统管理</h1>
       <div>
-        <el-button type="primary" >登出</el-button>
-        <span>admin</span>
+         <span class="user">{{user.tel}}</span>
+         <el-button type="primary" icon="el-icon-error"  style="margin-top:8px;margin-left:8px;"   circle @click="logout"></el-button>
+         
       </div>
     </el-header>
     <el-container style="height: 500px; border: 1px solid #eee">
@@ -24,12 +25,45 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
-  data() {
+   data() {
     return {
-      url: this.$router.history.current.path
+      user: {}
     };
   },
+  computed: {},
+  methods: {
+    logout() {
+      axios({
+        method: "get",
+        url: "/login/removeSession"
+      }).then(() => {
+        this.$router.replace("/login");
+      });
+    },
+    getSession() {
+      axios({
+        method: "get",
+        url: "/login/getSession"
+      }).then(({ data }) => {
+        if (!data.tel) {
+          this.$router.replace("/login");
+        } else {
+          if (!this.user.tel) {
+            this.user = data;
+          }
+        }
+      });
+    }
+  },
+  beforeupdate() {
+    console.log("before");
+    this.getSession();
+  },
+  created() {
+    this.getSession();
+  }
 };
 </script>
 
