@@ -78,8 +78,8 @@
     </el-table-column>
 
     <el-table-column label="图片" width="140" align="center">
-      <template slot-scope="scope">
-        <span style="margin-left: 10px">{{ scope.row.pictures }}</span>
+      <template  slot-scope="scope">
+        <img :src="url+scope.row.pictures" alt="" width="100px" height="60"/>
     </template>
     </el-table-column>
     <el-table-column label="操作"  width="180" align="center">
@@ -97,7 +97,8 @@ const { mapActions, mapState } = createNamespacedHelpers("productModule");
 export default {
      data(){
       return{
-      loading2:true
+      loading2:true,
+      url:"/upload/"
     }
   },
    computed: {

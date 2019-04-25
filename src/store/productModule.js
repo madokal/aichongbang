@@ -62,11 +62,14 @@ export default {
       });
     },
     addProduct({ commit }, addMess) {
+      // console.log(addMess);
       axios({
         method: "post",
         url: "/product",
         data: addMess
-      }).then(res => {});
+      }).then(res => {
+
+      });
     },
     deleteProduct({ commit }, id) {
       axios({
@@ -94,8 +97,11 @@ export default {
           info: data.info,
           price: data.price,
           pictures: data.pictures,
+          
         }
-      }).then(res => {});
+      }).then(res => {
+        
+      });
     },
     getUpdateProduct({ commit }, id) {
       axios({

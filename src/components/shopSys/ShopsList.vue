@@ -3,29 +3,16 @@
     <div>
         <el-tabs v-model="tabName1" type="border-card" @tab-click="clickTab">
             <el-tab-pane label="已审核门店" name="first">
-                 <SearchShop :search="this.searchShop1"></SearchShop>
+                 <SearchShop :search="this.searchShopsed"></SearchShop>
                 <div>
                     <el-table
-                        :data="shops"
+                        :data="shopsed"
                         height="350"
                         border
-                       
                         style="width: 100%">
                     <el-table-column
                         prop="name"
                         label="店名"
-                        width="180"
-                        align="center">
-                    </el-table-column>
-                    <el-table-column
-                        prop="permitNum"
-                        label="营业执照号码"
-                        width="180"
-                        align="center">
-                    </el-table-column>
-                    <el-table-column
-                        prop="permitImage"
-                        label="营业执照图片"
                         width="180"
                         align="center">
                     </el-table-column>
@@ -36,15 +23,9 @@
                         align="center">
                     </el-table-column>
                     <el-table-column
-                        prop="location"
-                        label="定位"
-                        width="180"
-                        align="center">
-                    </el-table-column>
-                    <el-table-column
                         prop="legalPerson"
                         label="法人"
-                        width="180"
+                        width="100"
                         align="center">
                     </el-table-column>
                     <el-table-column
@@ -54,8 +35,30 @@
                         align="center">
                     </el-table-column>
                     <el-table-column
-                        prop="logo"
+                        prop="permitNum"
+                        label="营业执照号码"
+                        width="180"
+                        align="center">
+                    </el-table-column>
+                    <el-table-column
+                        label="营业执照图片"
+                        width="180"
+                        align="center">
+                        <template slot-scope="scope">
+                            <img :src="url+scope.row.permitImage" alt="" style="width:100%;height:100px">
+                        </template>
+                    </el-table-column>
+                    <el-table-column
                         label="头图"
+                        width="180"
+                        align="center">
+                        <template slot-scope="scope">
+                            <img :src="url+scope.row.logo" alt="" style="width:100%;height:100px">
+                        </template>
+                    </el-table-column>
+                    <el-table-column
+                        prop="location"
+                        label="定位"
                         width="180"
                         align="center">
                     </el-table-column>
@@ -68,13 +71,13 @@
                     <el-table-column
                         prop="VIPlevel"
                         label="VIP等级"
-                        width="180"
+                        width="80"
                         align="center">
                     </el-table-column> 
                     <el-table-column
                         prop="commission"
                         label="佣金比例"
-                        width="180"
+                        width="80"
                         align="center">
                     </el-table-column>
                     <el-table-column
@@ -82,23 +85,27 @@
                         label="店员"
                         width="180"
                         align="center">
-                        </el-table-column>
-                    <el-table-column label="操作" align="center">
+                    </el-table-column>
+                    <el-table-column label="操作" align="center"  width="180">
                         <template slot-scope="scope">
                             <el-button
                                 size="mini"
                                 type="primary"
                                 @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                            <el-button
+                                size="mini"
+                                type="danger"
+                                @click="handleClose(scope.$index, scope.row)">关闭该店铺</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
             </div>
         </el-tab-pane>
    <el-tab-pane label="未审核门店" name="second" >
-        <SearchShop :search="this.searchShop2"></SearchShop>
+        <SearchShop :search="this.searchNoshops"></SearchShop>
                 <div>
                     <el-table
-                        :data="shops"
+                        :data="noshops"
                         height="350"
                         border
                         style="width: 100%">
@@ -109,33 +116,15 @@
                         align="center">
                     </el-table-column>
                     <el-table-column
-                        prop="permitNum"
-                        label="营业执照号码"
-                        width="180"
-                        align="center">
-                    </el-table-column>
-                    <el-table-column
-                        prop="permitImage"
-                        label="营业执照图片"
-                        width="180"
-                        align="center">
-                    </el-table-column>
-                    <el-table-column
                         prop="permitAddr"
                         label="营业地址"
                         width="180"
                         align="center">
                     </el-table-column>
                     <el-table-column
-                        prop="location"
-                        label="定位"
-                        width="180"
-                        align="center">
-                    </el-table-column>
-                    <el-table-column
                         prop="legalPerson"
                         label="法人"
-                        width="180"
+                        width="100"
                         align="center">
                     </el-table-column>
                     <el-table-column
@@ -145,8 +134,30 @@
                         align="center">
                     </el-table-column>
                     <el-table-column
-                        prop="logo"
+                        prop="permitNum"
+                        label="营业执照号码"
+                        width="180"
+                        align="center">
+                    </el-table-column>
+                    <el-table-column
+                        label="营业执照图片"
+                        width="180"
+                        align="center">
+                        <template slot-scope="scope">
+                            <img :src="url+scope.row.permitImage" alt="" style="width:100%;height:100px">
+                        </template>
+                    </el-table-column>
+                    <el-table-column
                         label="头图"
+                        width="180"
+                        align="center">
+                        <template slot-scope="scope">
+                            <img :src="url+scope.row.logo" alt="" style="width:100%;height:100px">
+                        </template>
+                    </el-table-column>
+                    <el-table-column
+                        prop="location"
+                        label="定位"
                         width="180"
                         align="center">
                     </el-table-column>
@@ -159,13 +170,13 @@
                     <el-table-column
                         prop="VIPlevel"
                         label="VIP等级"
-                        width="180"
+                        width="80"
                         align="center">
                     </el-table-column> 
                     <el-table-column
                         prop="commission"
                         label="佣金比例"
-                        width="180"
+                        width="80"
                         align="center">
                     </el-table-column>
                     <el-table-column
@@ -173,7 +184,7 @@
                         label="店员"
                         width="180"
                         align="center">
-                        </el-table-column>
+                    </el-table-column>
                     <el-table-column label="操作" align="center">
                         <template slot-scope="scope">
                             <el-button
@@ -185,24 +196,128 @@
                 </el-table>
             </div>
         </el-tab-pane>
+
+        <el-tab-pane label="已关闭门店" name="third">
+            <SearchShop :search="this.searchCloseshops"></SearchShop>
+                 <el-table
+                    :data="closeshops"
+                    border
+                    style="width: 100%">
+                    <el-table-column
+                        prop="name"
+                        label="店名"
+                        width="180"
+                        align="center">
+                    </el-table-column>
+                    <el-table-column
+                        prop="permitAddr"
+                        label="营业地址"
+                        width="180"
+                        align="center">
+                    </el-table-column>
+                    <el-table-column
+                        prop="legalPerson"
+                        label="法人"
+                        width="100"
+                        align="center">
+                    </el-table-column>
+                    <el-table-column
+                        prop="tel"
+                        label="联系电话"
+                        width="180"
+                        align="center">
+                    </el-table-column>
+                    <el-table-column
+                        prop="permitNum"
+                        label="营业执照号码"
+                        width="180"
+                        align="center">
+                    </el-table-column>
+                    <el-table-column
+                        label="营业执照图片"
+                        width="180"
+                        align="center">
+                        <template slot-scope="scope">
+                            <img :src="url+scope.row.permitImage" alt="" style="width:100%;height:100px">
+                        </template>
+                    </el-table-column>
+                    <el-table-column
+                        label="头图"
+                        width="180"
+                        align="center">
+                        <template slot-scope="scope">
+                            <img :src="url+scope.row.logo" alt="" style="width:100%;height:100px">
+                        </template>
+                    </el-table-column>
+                    <el-table-column
+                        prop="location"
+                        label="定位"
+                        width="180"
+                        align="center">
+                    </el-table-column>
+                    <el-table-column
+                        prop="special"
+                        label="特色"
+                        width="180"
+                        align="center">
+                    </el-table-column> 
+                    <el-table-column
+                        prop="VIPlevel"
+                        label="VIP等级"
+                        width="80"
+                        align="center">
+                    </el-table-column> 
+                    <el-table-column
+                        prop="commission"
+                        label="佣金比例"
+                        width="80"
+                        align="center">
+                    </el-table-column>
+                    <el-table-column
+                        prop="workers"
+                        label="店员"
+                        width="180"
+                        align="center">
+                    </el-table-column>
+                    <el-table-column label="操作" align="center">
+                        <template slot-scope="scope">
+                            <el-button
+                                size="mini"
+                                type="primary"
+                                @click="handleReopen(scope.$index, scope.row)">重开该门店</el-button>
+                        </template>
+                    </el-table-column>
+                </el-table>
+        </el-tab-pane>
   </el-tabs>
 </div>
 </div>
 </template>
 
 <script>
+import axios from "axios";
 import SearchShop from "./SearchShop";
 import { createNamespacedHelpers } from "vuex";
 const { mapState, mapActions, mapMutations } = createNamespacedHelpers("shops");
 export default {
   data() {
-    return {};
+    return {
+      url: "/upload/"
+    };
   },
   components: {
     SearchShop
   },
   computed: {
-    ...mapState(["shops", "tabName", "searchInfo", "visible"]),
+    ...mapState([
+      "noshops",
+      "shopsed",
+      "closeshops",
+      "tabName",
+      "pagination",
+      "searchInfo",
+      "userId"
+    ]),
     tabName1: {
       set(tabName) {
         this.setTabName(tabName);
@@ -213,30 +328,62 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["setShops", "setShops1", "setShops2"]),
+    ...mapActions([
+      "setShopsed",
+      "setNoshops",
+      "setCloseshops",
+      "setSearchShopsed",
+      "setSearchNoshops",
+      "setSearchCloseshops"
+    ]),
     ...mapMutations([
       "setShop",
       "setVisible",
       "setTabName",
       "setAuditShop",
-      "setAuditVisible"
+      "setAuditVisible",
+      "setSearchInfo",
+      "setEdit",
+      "setUserId"
     ]),
-    searchShop1() {
-      this.setShops1({});
-    },
-    searchShop2() {
-      this.setShops2({});
-    },
     clickTab(targetName) {
-      //   console.log(targetName.name);
       if (targetName.name == "first") {
         this.setTabName("first");
-        this.setShops1();
-      } else {
+        this.setShopsed();
+      } else if (targetName.name == "second") {
         this.setTabName("second");
-
-        this.setShops2();
-        console.log("1", this.shops);
+        this.setNoshops();
+      } else {
+        this.setTabName("third");
+        this.setCloseshops();
+      }
+    },
+    searchShopsed() {
+      //   console.log(this.searchInfo);
+      if (this.searchInfo.type && this.searchInfo.value) {
+        this.setSearchShopsed();
+        // console.log(this.shopsed, "页数");
+        // this.setSearchInfo({});
+      } else {
+        this.setShopsed();
+      }
+    },
+    searchNoshops() {
+      //   console.log(this.searchInfo);
+      if (this.searchInfo.type && this.searchInfo.value) {
+        this.setSearchNoshops();
+        // this.setSearchInfo({});
+      } else {
+        this.setNoshops();
+      }
+    },
+    searchCloseshops() {
+      //   console.log(this.searchInfo);
+      if (this.searchInfo.type && this.searchInfo.value) {
+        this.setSearchCloseshops();
+        // this.setSearchInfo({});
+      } else {
+        this.setCloseshops();
       }
     },
     handleEdit(index, row) {
@@ -245,12 +392,30 @@ export default {
       this.setVisible(true);
     },
     handleAudit(index, row) {
+      // console.log(row,"整条")
       this.setAuditShop(row);
       this.setAuditVisible(true);
+      let userId = row.users.$id;
+      this.setUserId(userId);
+      this.setEdit("确认审核？");
+    },
+    handleClose(index, row) {
+      this.setAuditShop(row);
+      this.setAuditVisible(true);
+      let userId = row.users.$id;
+      this.setUserId(userId);
+      this.setEdit("确认关闭该门店？");
+    },
+    handleReopen(index, row) {
+      this.setAuditShop(row);
+      this.setAuditVisible(true);
+      let userId = row.users.$id;
+      this.setUserId(userId);
+      this.setEdit("确认重开该门店？");
     }
   },
   created() {
-    this.setShops2();
+    this.setShopsed();
   }
 };
 </script>

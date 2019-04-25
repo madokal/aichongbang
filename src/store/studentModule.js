@@ -3,8 +3,9 @@ export default {
   namespaced: true,
   state: {
     petMaster: [],
-    pagination:{},
-    petMasterinfor:{},
+    pagination: {},
+    petMasterinfor: {},
+    user: []
     // visible:false
   },
   mutations: {
@@ -14,7 +15,7 @@ export default {
     setPagination(state, pagination) {
       state.pagination = pagination;
     },
-    setPetMasterinfor(state,petMasterinfor){
+    setPetMasterinfor(state, petMasterinfor) {
       state.petMasterinfor = petMasterinfor;
     },
     // setVisible(state,boolean){
@@ -24,28 +25,33 @@ export default {
   actions: {
     setPetMaster({
       commit
-    },payload = {}){
-        let page = payload.page || 1;
-        let rows = payload.rows || 5;
-        let type = payload.type || 'name';
-        let value = payload.value || '';
-        axios({
-          method: "get",
-          url: "/petMaster",
-          params: { page, rows ,type,value}
-        }).then((res) => {
-             commit('setPetMaster',res.data.rows);
-             commit('setPagination',res.data);
-        });
+    }, payload = {}) {
+      let page = payload.page || 1;
+      let rows = payload.rows || 5;
+      let type = payload.type || 'userName';
+      let value = payload.value || '';
+      axios({
+        method: "get",
+        url: "/petMaster",
+        params: {
+          page,
+          rows,
+          type,
+          value
+        }
+      }).then((res) => {
+        commit('setPetMaster', res.data.rows);
+        commit('setPagination', res.data);
+      });
     },
     setPetMasterinfor({
       commit
-    },id){
+    }, id) {
       axios({
-           method:'get',
-           url:'/petMaster/'+id
-      }).then((res) =>{
-         commit('setPetMasterinfor',res.data)
+        method: 'get',
+        url: '/petMaster/' + id
+      }).then((res) => {
+        commit('setPetMasterinfor', res.data)
       })
     }
   }

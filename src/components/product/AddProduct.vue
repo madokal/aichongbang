@@ -36,7 +36,7 @@
         </el-form-item>
 
         <el-form-item label="产地" :label-width="formLabelWidth">
-          <el-input v-model="form.place" autocomplete="off"></el-input>
+          <el-input v-model="form.palce" autocomplete="off"></el-input>
         </el-form-item>
 
         <el-form-item label="出厂日期" :label-width="formLabelWidth">
@@ -62,10 +62,20 @@
           <el-input v-model="form.price" autocomplete="off"></el-input>
         </el-form-item>
 
-        
-        <el-form-item label="图片" :label-width="formLabelWidth">
-          <el-input v-model="form.pictures" autocomplete="off"></el-input>
-        </el-form-item>
+      
+    <el-form-item  label="上传图片" >
+        <el-upload
+          class="avatar-uploader"
+          action="/product/upload"
+          :on-success="handleSuccess"
+         >
+          <img v-if="pictures" :src="pictures" class="avatar" >
+          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+       </el-upload>
+   </el-form-item> 
+
+
+
 
 
     <el-form-item class="btn">
@@ -78,45 +88,91 @@
 </template>
 
 <script>
+import axios from "axios";
 import { createNamespacedHelpers } from "vuex";
 const { mapActions, mapState } = createNamespacedHelpers("productModule");
 export default {
-  computed:{
+  computed: {
     ...mapState(["pagenation"])
   },
-    data() {
+  data() {
     return {
-   
+      pictures: "",
+
       dialogFormVisible: false,
       form: {
-        name: "",
+        name: ""
       },
       formLabelWidth: "120px"
     };
   },
-    methods: {
+  methods: {
+    handleSuccess(response, file, fileList) {
+      this.pictures = "/upload/" + response;
+      this.form.pictures = response;
+    },
 
     ...mapActions(["addProduct", "getProducts"]),
     addNo(form) {
       this.dialogFormVisible = false;
     },
+    //添加功能按钮
     add(form) {
-      let data = { ...this.form };
-      this.addProduct(data);
-      this.dialogFormVisible = false;
-      let page=this.pagenation.curpage;
-      this.getProducts({page});
+      let userId = "";
+      axios({
+        method: "get",
+        url: "/login/getSession"
+      }).then(res => {
+        let id = res.data._id;
+        axios({
+          method: "get",
+          url: "/product/shop",
+          params: { id }
+        }).then(res => {
+          userId = res.data[0]._id;
+          let data = { ...this.form };
+          data.id = userId;
+          console.log(data);
+          this.addProduct(data);
+          this.dialogFormVisible = false;
+          let page = this.pagenation.curpage;
+           this.getProducts({ page });
+        });
+      });
     }
   }
-}
+};
 </script>
 
 <style>
-.btn{
+.btn {
   text-align: center;
 }
-.div{
+.div {
   display: inline-block;
   margin-right: 14px;
+}
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.avatar-uploader .el-upload:hover {
+  border-color: #409eff;
+}
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  line-height: 178px;
+  text-align: center;
+}
+.avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
 }
 </style>
