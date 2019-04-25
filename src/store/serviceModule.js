@@ -3,9 +3,9 @@ export default {
   namespaced: true,
   state: {
     services: [],
-    service:{serviceType:{name:""}},
+    service: { serviceType: { name: "" } },
     pagination: {},
-    visible:false,
+    visible: false,
     type: "name",
     value: ""
   },
@@ -19,14 +19,14 @@ export default {
     setPagination(state, pagination) {
       state.pagination = pagination;
     },
-    setVisible(state,visible){
-      state.visible=visible
+    setVisible(state, visible) {
+      state.visible = visible
     },
-    setType(state,type){
-      state.type=type
+    setType(state, type) {
+      state.type = type
     },
-    setValue(state,value){
-      state.value=value
+    setValue(state, value) {
+      state.value = value
     }
 
   },
@@ -36,15 +36,20 @@ export default {
       let rows = rule.rows || 5;
       let type = rule.type || "";
       let value = rule.value || "";
-      let storeId="5cbaf6105caaca6f075a087e";
       axios({
         method: "get",
-        url: "/service",
-        params: {page, rows, type, value,storeId }
+        url: "/service/getSession",
       }).then(res => {
-        commit("setServices", res.data.rows);
-        commit("setPagination", res.data);
-      });
+        let storeId = res.data;
+        axios({
+          method: "get",
+          url: "/service",
+          params: { page, rows, type, value, storeId }
+        }).then(res => {
+          commit("setServices", res.data.rows);
+          commit("setPagination", res.data);
+        });
+      })
     },
     setService({ commit }, id) {
       axios({

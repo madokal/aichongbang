@@ -2,68 +2,68 @@
     <div class="div">
     <el-button type="primary" @click="dialogFormVisible = true">增加商品</el-button>
     <el-dialog title="增加" :visible.sync="dialogFormVisible">
-      <el-form :model="form" ref="addForm">
-        <el-form-item label="名称" :label-width="formLabelWidth">
+      <el-form :model="form" ref="addForm" >
+        <el-form-item label="名称" :label-width="formLabelWidth" prop="name">
           <el-input v-model="form.name" autocomplete="off"></el-input>
         </el-form-item>
 
-        <el-form-item label="品类" :label-width="formLabelWidth">
+        <el-form-item label="品类" :label-width="formLabelWidth"  prop="commodityType">
           <el-input v-model="form.commodityType" autocomplete="off"></el-input>
         </el-form-item>
 
-        <el-form-item label="制作方法" :label-width="formLabelWidth">
+        <el-form-item label="制作方法" :label-width="formLabelWidth"  prop="textureOrMade">
           <el-input v-model="form.textureOrMade" autocomplete="off"></el-input>
         </el-form-item>
           
-        <el-form-item label="适用规格" :label-width="formLabelWidth">
+        <el-form-item label="适用规格" :label-width="formLabelWidth"  prop="size">
           <el-input v-model="form.size" autocomplete="off"></el-input>
         </el-form-item>
 
-        <el-form-item label="专属规格" :label-width="formLabelWidth">
+        <el-form-item label="专属规格" :label-width="formLabelWidth"  prop="exclusiveSize">
           <el-input v-model="form.exclusiveSize" autocomplete="off"></el-input>
         </el-form-item>
          
-        <el-form-item label="包装规格" :label-width="formLabelWidth">
+        <el-form-item label="包装规格" :label-width="formLabelWidth"  prop="weight">
           <el-input v-model="form.weight" autocomplete="off"></el-input>
         </el-form-item>
 
-        <el-form-item label="口味" :label-width="formLabelWidth">
+        <el-form-item label="口味" :label-width="formLabelWidth"  prop="taste">
           <el-input v-model="form.taste" autocomplete="off"></el-input>
         </el-form-item>
 
-        <el-form-item label="特殊功能" :label-width="formLabelWidth">
+        <el-form-item label="特殊功能" :label-width="formLabelWidth"  prop="specialFunc">
           <el-input v-model="form.specialFunc" autocomplete="off"></el-input>
         </el-form-item>
 
-        <el-form-item label="产地" :label-width="formLabelWidth">
+        <el-form-item label="产地" :label-width="formLabelWidth"  prop="palce">
           <el-input v-model="form.palce" autocomplete="off"></el-input>
         </el-form-item>
 
-        <el-form-item label="出厂日期" :label-width="formLabelWidth">
+        <el-form-item label="出厂日期" :label-width="formLabelWidth"  prop="madeDate">
           <el-input v-model="form.madeDate" autocomplete="off"></el-input>
         </el-form-item>
 
-        <el-form-item label="保质期" :label-width="formLabelWidth">
+        <el-form-item label="保质期" :label-width="formLabelWidth"  prop="shelfLife">
           <el-input v-model="form.shelfLife" autocomplete="off"></el-input>
         </el-form-item>
         
         
-        <el-form-item label="供应商" :label-width="formLabelWidth">
+        <el-form-item label="供应商" :label-width="formLabelWidth"  prop="supplier">
           <el-input v-model="form.supplier" autocomplete="off"></el-input>
         </el-form-item>
 
         
-        <el-form-item label="特色说明" :label-width="formLabelWidth">
+        <el-form-item label="特色说明" :label-width="formLabelWidth"  prop="info">
           <el-input v-model="form.info" autocomplete="off"></el-input>
         </el-form-item>
 
         
-        <el-form-item label="价格" :label-width="formLabelWidth">
+        <el-form-item label="价格" :label-width="formLabelWidth"  prop="price">
           <el-input v-model="form.price" autocomplete="off"></el-input>
         </el-form-item>
 
       
-    <el-form-item  label="上传图片" >
+    <el-form-item  label="上传图片"  prop="pictures">
         <el-upload
           class="avatar-uploader"
           action="/product/upload"
@@ -97,8 +97,21 @@ export default {
   },
   data() {
     return {
+      name:"",
+      commodityType:"",
+      textureOrMade:"",
+      size:"",
+      exclusiveSize:"",
+      weight:"",
+      taste:"",
+      specialFunc:"",
+      palce:"",
+      madeDate:"",
+      shelfLife:"",
+      supplier:"",
+      info:"",
+      price:"",
       pictures: "",
-
       dialogFormVisible: false,
       form: {
         name: ""
@@ -132,11 +145,13 @@ export default {
           userId = res.data[0]._id;
           let data = { ...this.form };
           data.id = userId;
-          console.log(data);
+          // console.log(data);
           this.addProduct(data);
           this.dialogFormVisible = false;
           let page = this.pagenation.curpage;
-           this.getProducts({ page });
+          this.getProducts({ page });
+          this.$refs.addForm.resetFields();
+          this.pictures=""
         });
       });
     }

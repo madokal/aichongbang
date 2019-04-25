@@ -31,7 +31,7 @@
                 <el-input v-model="auditShop.special" :disabled="true" style="width:250px"></el-input>
             </el-form-item>
             <el-form-item label="定位：">
-                <el-input type="password" :disabled="true" v-model="auditShop.confirm" style="width:250px"></el-input>
+                <span class="location">({{auditShop.location.lng}}&nbsp;,&nbsp;{{auditShop.location.lat}})</span>
             </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
@@ -98,7 +98,7 @@ export default {
   },
   methods: {
     ...mapMutations(["setAuditVisible"]),
-    ...mapActions(["setNoshops"]),
+    ...mapActions(["setNoshops","setShopsed","setCloseshops"]),
     auditBtn(id) {
       // alert(this.userId,"用户Id")
       if (this.edit == "确认审核？") {
@@ -110,13 +110,13 @@ export default {
           this.setNoshops();
           this.setAuditVisible(false);
         });
-
         axios({
-          url: "/userSys/" + this.userId,
+          url: "/shopApply/users/" + this.userId,
           method: "put",
           data: { storeStatus: "已开店" }
         }).then(res => {
-          console.log(res);
+          // console.log(res);
+          this.$message.success("审核成功");
         });
       } else if (this.edit == "确认关闭该门店？") {
         axios({
@@ -124,16 +124,16 @@ export default {
           url: "/shopSys/auditshop/" + id,
           data: { storeStatus: 2 }
         }).then(() => {
-          this.setNoshops();
+          this.setShopsed();
           this.setAuditVisible(false);
         });
 
         axios({
-          url: "/userSys/" + this.userId,
+          url: "/shopApply/users/" + this.userId,
           method: "put",
           data: { storeStatus: "已封店" }
         }).then(res => {
-          console.log(res);
+         this.$message.success("该门店已被关闭");
         });
       } else {
         axios({
@@ -141,16 +141,16 @@ export default {
           url: "/shopSys/auditshop/" + id,
           data: { storeStatus: 1 }
         }).then(() => {
-          this.setNoshops();
+          this.setCloseshops();
           this.setAuditVisible(false);
         });
 
         axios({
-          url: "/userSys/" + this.userId,
+          url: "/shopApply/" + this.userId,
           method: "put",
           data: { storeStatus: "已开店" }
         }).then(res => {
-          console.log(res);
+          this.$message.success("该门店已重开");
         });
       }
     },
@@ -163,4 +163,13 @@ export default {
 </script>
 
 <style scoped>
+.location {
+  width: 250px;
+  height: 40px;
+  display: inline-block;
+  padding-left: 5px;
+  border: 1px solid #e5e5e5;
+  border-radius: 4px;
+  box-sizing: border-box
+}
 </style>

@@ -57,10 +57,12 @@
                         </template>
                     </el-table-column>
                     <el-table-column
-                        prop="location"
                         label="定位"
-                        width="180"
+                        width="200"
                         align="center">
+                        <template slot-scope="scope">
+                           <span>({{scope.row.location.lng}}&nbsp;,&nbsp;{{scope.row.location.lat}})</span>
+                        </template>
                     </el-table-column>
                     <el-table-column
                         prop="special"
@@ -156,10 +158,12 @@
                         </template>
                     </el-table-column>
                     <el-table-column
-                        prop="location"
                         label="定位"
-                        width="180"
+                        width="200"
                         align="center">
+                        <template slot-scope="scope">
+                           <span>({{scope.row.location.lng}}&nbsp;,&nbsp;{{scope.row.location.lat}})</span>
+                        </template>
                     </el-table-column>
                     <el-table-column
                         prop="special"
@@ -201,6 +205,7 @@
             <SearchShop :search="this.searchCloseshops"></SearchShop>
                  <el-table
                     :data="closeshops"
+                     height="350"
                     border
                     style="width: 100%">
                     <el-table-column
@@ -249,11 +254,13 @@
                             <img :src="url+scope.row.logo" alt="" style="width:100%;height:100px">
                         </template>
                     </el-table-column>
-                    <el-table-column
-                        prop="location"
+                     <el-table-column
                         label="定位"
-                        width="180"
+                        width="200"
                         align="center">
+                        <template slot-scope="scope">
+                           <span>({{scope.row.location.lng}}&nbsp;,&nbsp;{{scope.row.location.lat}})</span>
+                        </template>
                     </el-table-column>
                     <el-table-column
                         prop="special"
