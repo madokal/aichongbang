@@ -37,10 +37,10 @@ export default {
       console.log("chart");
       let myChart = echarts.init(this.$refs.myChart);
       axios({
-        url: "/order/serves",
+        url: "/shopSys/citySale",
         method: "get",
         params: {
-          status: "服务已完成"
+          status: "完成交易"
         }
       }).then(res => {
         console.log(res.data,"456")
@@ -68,9 +68,9 @@ export default {
         },
         series: [
           {
-            name: "季度服务次",
+            name: "城市",
             type: "pie",
-            radius: "80%",
+            radius: "70%",
             center: ["50%", "60%"],
             data: this.serveSeriesData,
             itemStyle: {
