@@ -68,17 +68,18 @@ export default {
       axios({
         method: "get",
         url: "/login/getSession"
-      }).then(({ data }) => {
-        if (!data.userName) {
+     }).then((res) => {
+        if (!res.data.userName) {
           this.$router.replace("/login");
         } else {
           if (!this.user.userName) {
-            this.user = data;
+            this.user = res.data;
           }
         }
       });
     }
   },
+
   beforeupdate() {
     console.log("before");
     this.getSession();

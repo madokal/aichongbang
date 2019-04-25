@@ -98,7 +98,7 @@ export default {
   },
   methods: {
     ...mapMutations(["setAuditVisible"]),
-    ...mapActions(["setNoshops"]),
+    ...mapActions(["setNoshops","setShopsed","setCloseshops"]),
     auditBtn(id) {
       // alert(this.userId,"用户Id")
       if (this.edit == "确认审核？") {
@@ -124,7 +124,7 @@ export default {
           url: "/shopSys/auditshop/" + id,
           data: { storeStatus: 2 }
         }).then(() => {
-          this.setNoshops();
+          this.setCloseshops();
           this.setAuditVisible(false);
         });
 
@@ -141,7 +141,7 @@ export default {
           url: "/shopSys/auditshop/" + id,
           data: { storeStatus: 1 }
         }).then(() => {
-          this.setNoshops();
+          this.setShopsed();
           this.setAuditVisible(false);
         });
 

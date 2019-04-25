@@ -11,7 +11,13 @@
     <el-container style="height: 500px; border: 1px solid #eee">
       <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
         <el-menu router :default-active="url" :default-openeds="[`${url}`]">
-          <el-menu-item index="/manage/userSys">用户管理</el-menu-item>
+          <el-submenu index="/manage/userSys">
+            <template slot="title">用户管理</template>
+            <el-menu-item-group>
+              <el-menu-item index="/manage/userSys">平台管理员</el-menu-item>
+              <el-menu-item index="/manage/shopManager">门店管理员</el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
           <el-menu-item index="/manage/petMaster">宠主管理</el-menu-item>
           <el-menu-item index="/manage/shopSys">门店管理</el-menu-item>
           <el-menu-item index="/manage/supplier">供应商管理</el-menu-item>
@@ -46,12 +52,12 @@ export default {
       axios({
         method: "get",
         url: "/login/getSession"
-      }).then(({ data }) => {
-        if (!data.tel) {
+      }).then((res) => {
+        if (!res.data.tel) {
           this.$router.replace("/login");
         } else {
           if (!this.user.tel) {
-            this.user = data;
+            this.user = res.data;
           }
         }
       });
