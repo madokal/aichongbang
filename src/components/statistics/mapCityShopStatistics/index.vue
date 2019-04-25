@@ -57,7 +57,7 @@ export default {
                         // 打印出当前缩放值
                         if (zoom < bmap.getZoom() && bmap.getZoom() == 10) {
                             axios({
-                                url: "/service/storeCounts",
+                                url: "/service/oneCityStores",
                                 method: "get"
                             }).then(res => {
                                 this.shopsData = res.data;
