@@ -110,13 +110,13 @@ export default {
           this.setNoshops();
           this.setAuditVisible(false);
         });
-
         axios({
-          url: "/userSys/" + this.userId,
+          url: "/shopApply/users/" + this.userId,
           method: "put",
           data: { storeStatus: "已开店" }
         }).then(res => {
-          console.log(res);
+          // console.log(res);
+          this.$message.success("审核成功");
         });
       } else if (this.edit == "确认关闭该门店？") {
         axios({
@@ -129,11 +129,11 @@ export default {
         });
 
         axios({
-          url: "/userSys/" + this.userId,
+          url: "/shopApply/users/" + this.userId,
           method: "put",
           data: { storeStatus: "已封店" }
         }).then(res => {
-          console.log(res);
+         this.$message.success("该门店已被关闭");
         });
       } else {
         axios({
@@ -146,11 +146,11 @@ export default {
         });
 
         axios({
-          url: "/userSys/" + this.userId,
+          url: "/shopApply/" + this.userId,
           method: "put",
           data: { storeStatus: "已开店" }
         }).then(res => {
-          console.log(res);
+          this.$message.success("该门店已重开");
         });
       }
     },
