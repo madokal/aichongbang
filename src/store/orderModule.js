@@ -25,17 +25,15 @@ export default {
     actions: {
         getOrders({ commit }, rule = {}) {
             let allOrders = rule.allOrders || "";
-            let page = rule.page || 1;
-            let rows = rule.rows || 5;
             let type = rule.type || "";
             let value = rule.value || "";
             if (allOrders == "订单" || allOrders == "服务") {
                 axios({
                     method: "get",
                     url: "/order",
-                    params: { page, rows, type, value, allOrders }
+                    params: { type, value, allOrders }
                 }).then(res => {
-                    console.log(res.data, "ppp")
+                    console.log(res.data, "ppp,修改")
                     commit("setOrders", res.data);
                     commit("setPagenation", res.data);
                 });
@@ -43,7 +41,7 @@ export default {
                 axios({
                     method: "get",
                     url: "/order/orders",
-                    params: { page, rows, type, value, allOrders }
+                    params: {  type, value, allOrders }
                 }).then(res => {
                     console.log(res.data, "ssss")
                     commit("setOrders", res.data);
