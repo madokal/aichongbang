@@ -13,6 +13,7 @@
         width="150"
         :show-overflow-tooltip="true"
       ></el-table-column>
+      <el-table-column prop="orderNum" label="订单号" width="120" :show-overflow-tooltip="true"></el-table-column>
       <el-table-column prop="commodities.name" label="商品" width="120" :show-overflow-tooltip="true"></el-table-column>
       <el-table-column prop="commodities.price" label="价格" width="120"></el-table-column>
       <el-table-column prop="stores.name" label="店铺" width="120" :show-overflow-tooltip="true"></el-table-column>
@@ -37,12 +38,20 @@
       v-if="details"
     >
       <div>
+        <span class="rig">订单号：</span>
+        <span>{{details.orderNum}}</span>
+      </div>
+      <div>
         <span class="rig">用户：</span>
         <span>{{details.petOwners.userName}}</span>
       </div>
       <div>
         <span class="rig">商品：</span>
         <span>{{details.commodities.name}}</span>
+      </div>
+      <div>
+        <span class="rig">交易日期：</span>
+        <span>{{details.date}}</span>
       </div>
       <div>
         <span class="rig">净重：</span>
@@ -81,12 +90,6 @@
           </div>
         </div>
         <div class="div">
-          <div class="rig div"></div>
-          <div>
-            <img src="details.comments.images" alt width="50px">
-          </div>
-        </div>
-        <div class="div">
           <div class="rig div">评价内容：</div>
           <div>
             <span></span>
@@ -105,17 +108,22 @@
         <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
       </span>
     </el-dialog>
+    <OrderPage :orders="orders"/>
   </div>
 </template>
 
 
 <script>
+import axios from "axios";
+import OrderPage from "../OrderPage.vue"
 import { createNamespacedHelpers } from "vuex";
 const { mapActions, mapState } = createNamespacedHelpers("orderModule");
 export default {
+  components:{
+    OrderPage
+  },
   data() {
     return {
-      activeName: "first",
       dialogVisible: false,
       details: ""
     };
@@ -125,7 +133,7 @@ export default {
   },
   created() {
     this.getOrders({ allOrders: "订单" });
-    console.log(this.orders, "orders");
+    console.log(this.pagenation, "分页");
   },
   methods: {
     ...mapActions(["getOrders"]),
@@ -154,25 +162,43 @@ export default {
       this.dialogVisible = true;
     },
     trueClick(row) {
-      console.log(row, "true");
-      this.$prompt("请输入订单验证码", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        inputValidator: function(value){
-          console.log(value,123)
-          if(value == row.orderNum){
-            return true
-          }else{
-            return false
-          }
-        },
-        inputErrorMessage: "验证码输入错误!!!"
-      }).then(({ value }) => {
-        this.$message({
-          type: "success",
-          message: "你的验证码是: " + value + ", 验证成功,订单交易已完成 "
+      console.log(row, "true", row.status, row._id);
+      if (row.userStatus) {
+        //用户已确认订单
+        axios({
+          method: "put",
+          url: "/order/" + row._id,
+          data: { status: row.status, id: row._id }
+        }).then(res => {
+          console.log(res.data, "修改");
+          this.getOrders({ allOrders: "订单" });
         });
-      });
+      } else {
+        //等待用户确认
+        this.$alert("等待用户确认订单...", "警告", {
+          confirmButtonText: "确定",
+          callback: action => {}
+        });
+        //用户点击确认，更改用户状态
+        // axios({
+        //   method: "put",
+        //   url: "/order/user" + row._id,
+        //   data: { status: row.userStatus, id: row._id }
+        // }).then(res => {
+        //   console.log(res.data, "修改");
+        //   // commit("setOrder", res.data);
+        //   this.getOrders({ allOrders: "订单" });
+        // });
+      }
+    },
+    handleSizeChange(val) {
+      this.getOrders({ rows: val });
+      console.log(`每页 ${val} 条`);
+    },
+    handleCurrentChange(val) {
+      this.getOrders({ page: val });
+
+      console.log(`当前页: ${val}`);
     }
   }
 };
