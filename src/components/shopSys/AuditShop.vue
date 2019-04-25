@@ -8,35 +8,35 @@
             <el-form-item label="营业地址：">
                 <el-input v-model="auditShop.permitAddr" :disabled="true" style="width:250px"></el-input>
             </el-form-item>
+            <el-form-item label="法人：">
+                <el-input v-model="auditShop.legalPerson" :disabled="true" style="width:250px"></el-input>
+            </el-form-item>
+            <el-form-item label="联系电话：">
+                <el-input v-model="auditShop.tel" :disabled="true" style="width:250px"></el-input>
+            </el-form-item>
             <el-form-item label="营业执照号码：">
                 <el-input v-model="auditShop.permitNum" :disabled="true" style="width:250px"></el-input>
             </el-form-item>
             <el-form-item label="营业执照图片：">
-                <div style="width:250px;border:1px solid gray;padding:10px;box-sizing:border-box">
-       
+                <div style="width:250px;border:1px solid #e5e5e5;padding:10px;box-sizing:border-box">
+                  <img :src="url+auditShop.permitImage" alt="" style="width:100%">
                 </div>
-            </el-form-item>
-            <el-form-item label="法人：">
-                <el-input v-model="auditShop.legalPerson" :disabled="true" style="width:250px"></el-input>
             </el-form-item>
             <el-form-item label="头图：">
-                <div style="width:250px;border:1px solid gray;padding:10px;box-sizing:border-box" >
-       
+                <div style="width:250px;border:1px solid #e5e5e5;padding:10px;box-sizing:border-box" >
+                    <img :src="url+auditShop.logo" alt="" style="width:100%">
                 </div>
-            </el-form-item>
-            <el-form-item label="联系电话：">
-                <el-input v-model="auditShop.tel" :disabled="true" style="width:250px"></el-input>
             </el-form-item>
             <el-form-item label="特色：">
                 <el-input v-model="auditShop.special" :disabled="true" style="width:250px"></el-input>
             </el-form-item>
             <el-form-item label="定位：">
-                <el-input type="password" :disabled="true" v-model="auditShop.confirm" style="width:250px"></el-input>
+                <span class="location">({{auditShop.location.lng}}&nbsp;,&nbsp;{{auditShop.location.lat}})</span>
             </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="setAuditVisible(false)">取 消</el-button>
-            <el-button type="primary" @click="auditBtn(auditShop._id)" >确定审核</el-button>
+            <el-button type="primary" @click="auditBtn(auditShop._id)" >{{edit}}</el-button>
           </div>
         </el-dialog>  
     </div>
@@ -47,8 +47,13 @@ import axios from "axios";
 import { createNamespacedHelpers } from "vuex";
 const { mapState, mapActions, mapMutations } = createNamespacedHelpers("shops");
 export default {
+  data() {
+    return {
+      url: "/upload/"
+    };
+  },
   computed: {
-    ...mapState(["auditShop", "auditVisible", "pagination"]),
+    ...mapState(["auditShop", "auditVisible", "pagination", "edit", "userId"]),
     updateAuditVisible: {
       set(auditVisible) {
         this.setAuditVisible(auditVisible);
@@ -93,17 +98,63 @@ export default {
   },
   methods: {
     ...mapMutations(["setAuditVisible"]),
-    ...mapActions(["setNoshops"]),
+    ...mapActions(["setNoshops","setShopsed","setCloseshops"]),
     auditBtn(id) {
-      axios({
-        method: "put",
-        url: "/shopSys/auditshop/" + id,
-        data: { storeStatus: 1 }
-      }).then(() => {
-        this.setNoshops();
-        this.setAuditVisible(false);
-      });
+      // alert(this.userId,"用户Id")
+      if (this.edit == "确认审核？") {
+        axios({
+          method: "put",
+          url: "/shopSys/auditshop/" + id,
+          data: { storeStatus: 1 }
+        }).then(() => {
+          this.setNoshops();
+          this.setAuditVisible(false);
+        });
+        axios({
+          url: "/shopApply/users/" + this.userId,
+          method: "put",
+          data: { storeStatus: "已开店" }
+        }).then(res => {
+          // console.log(res);
+          this.$message.success("审核成功");
+        });
+      } else if (this.edit == "确认关闭该门店？") {
+        axios({
+          method: "put",
+          url: "/shopSys/auditshop/" + id,
+          data: { storeStatus: 2 }
+        }).then(() => {
+          this.setShopsed();
+          this.setAuditVisible(false);
+        });
+
+        axios({
+          url: "/shopApply/users/" + this.userId,
+          method: "put",
+          data: { storeStatus: "已封店" }
+        }).then(res => {
+         this.$message.success("该门店已被关闭");
+        });
+      } else {
+        axios({
+          method: "put",
+          url: "/shopSys/auditshop/" + id,
+          data: { storeStatus: 1 }
+        }).then(() => {
+          this.setCloseshops();
+          this.setAuditVisible(false);
+        });
+
+        axios({
+          url: "/shopApply/" + this.userId,
+          method: "put",
+          data: { storeStatus: "已开店" }
+        }).then(res => {
+          this.$message.success("该门店已重开");
+        });
+      }
     },
+
     close() {
       this.setAuditVisible(false);
     }
@@ -112,4 +163,13 @@ export default {
 </script>
 
 <style scoped>
+.location {
+  width: 250px;
+  height: 40px;
+  display: inline-block;
+  padding-left: 5px;
+  border: 1px solid #e5e5e5;
+  border-radius: 4px;
+  box-sizing: border-box
+}
 </style>
