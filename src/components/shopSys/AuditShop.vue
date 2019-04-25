@@ -31,7 +31,7 @@
                 <el-input v-model="auditShop.special" :disabled="true" style="width:250px"></el-input>
             </el-form-item>
             <el-form-item label="定位：">
-                <el-input type="password" :disabled="true" v-model="auditShop.confirm" style="width:250px"></el-input>
+                <span class="location">({{auditShop.location.lng}}&nbsp;,&nbsp;{{auditShop.location.lat}})</span>
             </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
@@ -163,4 +163,13 @@ export default {
 </script>
 
 <style scoped>
+.location {
+  width: 250px;
+  height: 40px;
+  display: inline-block;
+  padding-left: 5px;
+  border: 1px solid #e5e5e5;
+  border-radius: 4px;
+  box-sizing: border-box
+}
 </style>
