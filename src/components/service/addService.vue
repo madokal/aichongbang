@@ -17,7 +17,7 @@
           <el-input v-model="addform.name" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="服务时间:" prop="scheduling">
-          <el-input v-model="addform.scheduling" autocomplete="off"></el-input>
+          <el-input v-model="addform.scheduling" autocomplete="off" placeholder="输入类型如:['13:30-14:30','14:30-15:30']"></el-input>
         </el-form-item>
         <el-form-item label="适用规格:" prop="weight">
           <el-input v-model="addform.weight" autocomplete="off"></el-input>
