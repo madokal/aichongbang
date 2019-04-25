@@ -22,8 +22,10 @@ export default {
     ...mapActions([
       "setShopsed",
       "setNoshops",
+      "setCloseshops",
       "setSearchShopsed",
-      "setSearchNoshops"
+      "setSearchNoshops",
+      "setSearchCloseshops"
     ]),
     ...mapMutations(["setNoshopsAy", "setShopsedAy"]),
 
@@ -36,12 +38,19 @@ export default {
           // console.log("feny")
           this.setShopsed({ page: val });
         }
-      } else {
+      } else if (this.tabName == "second") {
         if (this.searchInfo.type && this.searchInfo.value) {
           //搜索分页
           this.setSearchNoshops({ page1: val });
         } else {
           this.setNoshops({ page: val });
+        }
+      } else {
+        if (this.searchInfo.type && this.searchInfo.value) {
+          //搜索分页
+          this.setSearchCloseshops({ page1: val });
+        } else {
+          this.setCloseshops({ page: val });
         }
       }
     },
