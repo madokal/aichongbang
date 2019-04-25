@@ -97,6 +97,7 @@ export default {
           info: data.info,
           price: data.price,
           pictures: data.pictures,
+          
         }
       }).then(res => {
         

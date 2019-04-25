@@ -158,6 +158,7 @@ export default {
                 this.$router.push({path:"/shopApplying",query:{id:res.data.id}});             
               }else if(res.data.status == 4){
                 //已封店   跳转店铺封店状态告知页面
+
                  this.$router.push({path:"/shopApplyed",query:{id:res.data.id}});       
               }else {
                 alert("账号或密码错误，请重新输入");
