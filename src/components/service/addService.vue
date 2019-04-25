@@ -53,7 +53,7 @@ export default {
       dialogVisible: false,
       addform: {
         serviceType: "",
-        serviceTypeId:"",
+        serviceTypeId: "",
         name: "",
         scheduling: [],
         weight: "",
@@ -87,7 +87,6 @@ export default {
     ...mapActions(["setServices"]),
     add(addform) {
       this.$refs[addform].validate(valid => {
-        let storeId="5cbaf6105caaca6f075a087e";
         let {
           serviceTypeId,
           name,
@@ -98,23 +97,29 @@ export default {
         } = this.addform;
         if (valid) {
           axios({
-            method: "post",
-            url: "/service",
-            data: {
-              serviceTypeId,
-              name,
-              scheduling,
-              weight,
-              time,
-              price,
-              level: "默认初级",
-              storeId
-            }
+            method: "get",
+            url: "/service/getSession"
           }).then(res => {
-            if (res.data.status == 1) {
-              this.$message.success("增加成功！");
-              this.setServices({ page: this.pagination.maxpage });
-            }
+            let storeId = res.data;
+            axios({
+              method: "post",
+              url: "/service",
+              data: {
+                serviceTypeId,
+                name,
+                scheduling,
+                weight,
+                time,
+                price,
+                level: "默认初级",
+                storeId
+              }
+            }).then(res => {
+              if (res.data.status == 1) {
+                this.$message.success("增加成功！");
+                this.setServices({ page: this.pagination.maxpage });
+              }
+            });
           });
           this.dialogVisible = false;
           this.$refs[addform].resetFields();
@@ -128,20 +133,26 @@ export default {
       this.$refs.addform.resetFields();
     },
     getSelectlist() {
-      let storeId="5cbaf6105caaca6f075a087e";
       axios({
         method: "get",
-        url: "/service/serviceType",
-        params:{
-          storeId
-        }
+        url: "/service/getSession"
       }).then(res => {
-        this.selectlists = res.data;
+        let storeId = res.data;
+        axios({
+          method: "get",
+          url: "/service/serviceType",
+          params: {
+            storeId
+          }
+        }).then(res => {
+          this.selectlists = res.data;
+        });
       });
     },
     selectChange(val) {
       var obj = {};
-      obj = this.selectlists.find(function(item) {//obj是选中的对象
+      obj = this.selectlists.find(function(item) {
+        //obj是选中的对象
         return item.name === val;
       });
       this.addform.serviceTypeId = obj._id;
