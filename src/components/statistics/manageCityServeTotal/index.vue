@@ -1,7 +1,7 @@
 <template>
      <div>
         <el-radio-group v-model="type" @change="showChart">
-            <el-radio-button label="平台管理员统计城市服务总销售额的占比"></el-radio-button>
+            <!-- <el-raadio-button label="平台管理员统计城市服务总销售额的占比"></el-raadio-button> -->
         </el-radio-group>
         <div class="total" id="myChart" ref="myChart"></div>
     </div>
@@ -23,7 +23,8 @@ export default {
      data() {
         return {
             type: "平台管理员统计城市服务总销售额的占比",
-            
+             cityAxisData: [],
+           citySeriesData: []
         };
     },
     mounted() {
@@ -35,25 +36,49 @@ export default {
         showChart(){
              console.log("chart");
             let myChart = echarts.init(this.$refs.myChart);
-
+            axios({
+                    url: "/supplier/orders",
+                    method: "get",
+                    params:{
+                                status:"服务已完成"
+                                }
+                }).then(res => {
+                    this.cityAxisData = res.data.axisData;
+                    this.citySeriesData = res.data.seriesData;
+                    myChart.setOption(this.cityOptions, true);
+                });
         }
     },
     computed:{
-         classesOptions() {
+         cityOptions() {
             return {
                 title: {
-                    text: "平台管理员统计城市服务总销售额的占比"
+                    text: "平台管理员统计城市服务总销售额的占比",
+                    x:"center"
                 },
-                tooltip: {},
-                xAxis: {
-                    data: this.classAxisData
+                tooltip: {
+                     trigger: "item",
+          formatter: "{a} <br/>{b} : {c} ({d}%)"
                 },
-                yAxis: {},
+                legend: {
+                    orient: "vertical",
+                    left: "80%",
+                    data: this.cityAxisData
+                },
                 series: [
                     {
-                        name: "人数",
-                        type: "bar",
-                        data: this.classSeriesData
+                        name: "城市服务销售额总占比",
+                        type: "pie",
+                        radius: "55%",
+                        center: ["50%", "50%"],
+                        data: this.citySeriesData,
+                        itemStyle: {
+                            emphasis: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: "rgba(0, 0, 0, 0.5)"
+                            }
+                        }
                     }
                 ]
             };
@@ -62,6 +87,10 @@ export default {
 }
 </script>
 <style scoped>
-
+.total{
+    width:100%;
+    height:500px
+}
 </style>
+
 
