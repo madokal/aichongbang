@@ -14,51 +14,15 @@
       <el-form-item label="店名：" prop="name" >
           <el-input v-model="ruleForm2.name" style="width:250px"></el-input>
       </el-form-item>
+      <el-form-item label="联系电话：" prop="tel" >
+          <el-input v-model="ruleForm2.tel" style="width:250px"></el-input>
+      </el-form-item>
       <el-form-item label="营业地址：" prop="permitAddr" >
         <el-input v-model="ruleForm2.permitAddr" style="width:250px"></el-input>
       </el-form-item>
-      <el-form-item label="营业执照号码：" prop="permitNum">
-          <el-input v-model="ruleForm2.permitNum" style="width:250px"></el-input>
-      </el-form-item>
-      <el-form-item label="法人：" prop="legalPerson" >
-          <el-input v-model="ruleForm2.legalPerson" style="width:250px"></el-input>
-      </el-form-item>
-           <el-form-item label="营业执照图片：" prop="permitImage" >
-        <div style="width:250px;border:1px solid #e5e5e5;padding:10px;box-sizing:border-box">
-          <el-upload
-            class="avatar-uploader"
-            action="/shopApply/upload"
-            :limit="1"
-            :on-success="handlePermitImageSuccess">
-            <img v-if="permitImageUrl" :src="permitImageUrl" style="width:100%" class="avatar">
-            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-          </el-upload>
-        </div>
-      </el-form-item>
-      <el-form-item label="头图：" prop="logo" >
-        <div style="width:250px;border:1px solid #e5e5e5;padding:10px;box-sizing:border-box" >
-          <el-upload
-            class="avatar-uploader"
-            action="/shopApply/upload"
-            :limit="1"
-            :on-success="handleLogoImageSuccess">
-            <img v-if="logoImageUrl" :src="logoImageUrl" style="width:100%" class="avatar">
-            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-          </el-upload>
-        </div>
-      </el-form-item>
-       <el-form-item label="联系电话：" prop="tel" >
-          <el-input v-model="ruleForm2.tel" style="width:250px"></el-input>
-      </el-form-item>
-      <el-form-item label="特色：" prop="special" >
-          <el-input v-model="ruleForm2.special" style="width:250px"></el-input>
-      </el-form-item>
-      <el-form-item label="城市：" prop="city">
-          <el-input  v-model="ruleForm2.city" style="width:250px"></el-input>
-      </el-form-item>
       <el-form-item label="定位：" prop="location">
 
-       <el-button type="primary" @click="openMap">点我获取定位</el-button>
+       <el-button type="primary" @click="openMap" style="width:250px">点我获取定位</el-button>
        <template>
           <el-dialog
             title="提示"
@@ -94,6 +58,42 @@
           </el-dialog>
        </template>
       </el-form-item>
+      <el-form-item label="营业执照号码：" prop="permitNum">
+          <el-input v-model="ruleForm2.permitNum" style="width:250px"></el-input>
+      </el-form-item>
+      <el-form-item label="法人：" prop="legalPerson" >
+          <el-input v-model="ruleForm2.legalPerson" style="width:250px"></el-input>
+      </el-form-item>
+           <el-form-item label="营业执照图片：" prop="permitImage" >
+        <div style="width:250px;border:1px solid #e5e5e5;padding:10px;box-sizing:border-box">
+          <el-upload
+            class="avatar-uploader"
+            action="/shopApply/upload"
+            :limit="1"
+            :on-success="handlePermitImageSuccess">
+            <img v-if="permitImageUrl" :src="permitImageUrl" style="width:100%" class="avatar">
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+          </el-upload>
+        </div>
+      </el-form-item>
+      <el-form-item label="头图：" prop="logo" >
+        <div style="width:250px;border:1px solid #e5e5e5;padding:10px;box-sizing:border-box" >
+          <el-upload
+            class="avatar-uploader"
+            action="/shopApply/upload"
+            :limit="1"
+            :on-success="handleLogoImageSuccess">
+            <img v-if="logoImageUrl" :src="logoImageUrl" style="width:100%" class="avatar">
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+          </el-upload>
+        </div>
+      </el-form-item>
+    
+      <el-form-item label="特色：" prop="special" >
+          <el-input v-model="ruleForm2.special" style="width:680px" type="textarea"></el-input>
+      </el-form-item>
+
+    
      
         <!-- <el-form-item label="定位：" prop="location" style="visibility: hidden;">
           <el-input type="password" v-model="ruleForm2.confirm" style="width:250px"></el-input>
@@ -128,10 +128,10 @@ export default {
   },
   data() {
     return {
-      keyword:"成都",
+      keyword: "成都",
       zoom: 3,
       show: false,
-      dialogVisible:false,
+      dialogVisible: false,
       postionMap: {
         lng: "",
         lat: ""
@@ -139,7 +139,7 @@ export default {
       add: {
         jd: "",
         wd: "",
-        site:"",
+        site: ""
       },
       permitImageUrl: "",
       logoImageUrl: "",
@@ -152,7 +152,7 @@ export default {
         special: "",
         permitImage: "",
         logo: "",
-        address: "",
+        address: ""
       },
       rules2: {
         name: [
@@ -203,7 +203,7 @@ export default {
     };
   },
   methods: {
-    openMap(){
+    openMap() {
       this.dialogVisible = true;
     },
     getPoint(e) {
@@ -214,11 +214,12 @@ export default {
       this.add.jd = e.point.lng;
       this.add.wd = e.point.lat;
       this.zoom = e.target.getZoom();
-      console.log( this.postionMap.lng,"经纬度");
+      console.log(this.postionMap.lng, "经纬度");
       let geocoder = new BMap.Geocoder(); //创建地址解析器的实例
       geocoder.getLocation(e.point, rs => {
         this.add.site = rs.address;
-        console.log(this.add.site,"位置信息")
+        this.ruleForm2.permitAddr = rs.address
+        // console.log(this.add.site, "位置信息");
       });
     },
     infoWindowClose() {
@@ -263,7 +264,7 @@ export default {
               permitImage: this.ruleForm2.permitImage,
               logo: this.ruleForm2.logo,
               id: userId,
-              location:this.postionMap
+              location: this.postionMap
             }
           }).then(res => {
             this.$router.push("/shopApplying");
@@ -291,7 +292,7 @@ export default {
 </script>
 
 <style scoped>
-.map{
+.map {
   width: 600px;
   height: 400px;
   margin: auto;
