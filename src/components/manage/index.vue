@@ -5,7 +5,6 @@
       <div>
          <span class="user">{{user.tel}}</span>
          <el-button type="primary" icon="el-icon-error"  style="margin-top:8px;margin-left:8px;"   circle @click="logout"></el-button>
-         
       </div>
     </el-header>
     <el-container style="height: 500px; border: 1px solid #eee">

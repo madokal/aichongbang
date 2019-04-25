@@ -124,7 +124,7 @@ export default {
           url: "/shopSys/auditshop/" + id,
           data: { storeStatus: 2 }
         }).then(() => {
-          this.setCloseshops();
+          this.setShopsed();
           this.setAuditVisible(false);
         });
 
@@ -141,7 +141,7 @@ export default {
           url: "/shopSys/auditshop/" + id,
           data: { storeStatus: 1 }
         }).then(() => {
-          this.setShopsed();
+          this.setCloseshops();
           this.setAuditVisible(false);
         });
 
