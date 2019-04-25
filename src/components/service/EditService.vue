@@ -79,7 +79,7 @@ export default {
         this.setService({
           ...this.service,
           serviceType: {
-            name: serviceType,
+            name: serviceType
           }
         });
       },
@@ -148,13 +148,22 @@ export default {
     ...mapActions(["setServices"]),
     edit(editForm) {
       this.$refs[editForm].validate(valid => {
-        let {_id,name,scheduling,weight,time,price,level,stores} = this.service;
+        let {
+          _id,
+          name,
+          scheduling,
+          weight,
+          time,
+          price,
+          level,
+          stores
+        } = this.service;
         if (valid) {
           axios({
             method: "put",
             url: "/service/" + _id,
             data: {
-              serviceTypeId:this.serviceTypeId,
+              serviceTypeId: this.serviceTypeId,
               name,
               scheduling,
               weight,
@@ -165,9 +174,9 @@ export default {
             }
           }).then(res => {
             if (res.data.status == 1) {
-            this.$message.success("修改成功");
-            this.setVisible(false);
-            this.setServices({ page: this.pagination.curpage });
+              this.$message.success("修改成功");
+              this.setVisible(false);
+              this.setServices({ page: this.pagination.curpage });
             }
           });
         } else {
@@ -179,15 +188,20 @@ export default {
       this.setVisible(false);
     },
     getSelectlist() {
-      let storeId="5cbaf6105caaca6f075a087e";
       axios({
         method: "get",
-        url: "/service/serviceType",
-        params:{
-          storeId
-        }
+        url: "/service/getSession"
       }).then(res => {
-        this.selectlists = res.data;
+        let storeId = res.data;
+        axios({
+          method: "get",
+          url: "/service/serviceType",
+          params: {
+            storeId
+          }
+        }).then(res => {
+          this.selectlists = res.data;
+        });
       });
     },
     selectChange(val) {

@@ -62,24 +62,29 @@ export default {
     add(addform) {
       this.$refs[addform].validate(valid => {
         let { name, gold, platinum, diamond } = this.addform;
-        let storeId = "5cbaf6105caaca6f075a087e";
         if (valid) {
           axios({
-            method: "post",
-            url: "/service/serviceType",
-            data: {
-              name,
-              gold,
-              platinum,
-              diamond,
-              storeId
-            }
+            method: "get",
+            url: "/service/getSession"
           }).then(res => {
-            if (res.data.status == 1) {
-              this.$message.success("增加成功！");
-              this.setServiceTypes();
-              // this.setServiceTypes({ page: this.pagination.maxpage });
-            }
+            let storeId = res.data;
+            axios({
+              method: "post",
+              url: "/service/serviceType",
+              data: {
+                name,
+                gold,
+                platinum,
+                diamond,
+                storeId
+              }
+            }).then(res => {
+              if (res.data.status == 1) {
+                this.$message.success("增加成功！");
+                this.setServiceTypes();
+                // this.setServiceTypes({ page: this.pagination.maxpage });
+              }
+            });
           });
           this.dialogVisible = false;
           this.$refs[addform].resetFields();

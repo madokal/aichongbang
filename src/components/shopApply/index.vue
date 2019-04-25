@@ -17,9 +17,7 @@
       <el-form-item label="联系电话：" prop="tel" >
           <el-input v-model="ruleForm2.tel" style="width:250px"></el-input>
       </el-form-item>
-      <el-form-item label="营业地址：" prop="permitAddr" >
-        <el-input v-model="ruleForm2.permitAddr" style="width:250px"></el-input>
-      </el-form-item>
+    
       <el-form-item label="定位：" prop="location">
 
        <el-button type="primary" @click="openMap" style="width:250px">点我获取定位</el-button>
@@ -58,6 +56,9 @@
           </el-dialog>
        </template>
       </el-form-item>
+      <el-form-item label="营业地址：" >
+        <el-input v-model="ruleForm2.permitAddr" :v-model="keyword" style="width:250px"></el-input>
+      </el-form-item>
       <el-form-item label="营业执照号码：" prop="permitNum">
           <el-input v-model="ruleForm2.permitNum" style="width:250px"></el-input>
       </el-form-item>
@@ -92,13 +93,6 @@
       <el-form-item label="特色：" prop="special" >
           <el-input v-model="ruleForm2.special" style="width:680px" type="textarea"></el-input>
       </el-form-item>
-
-    
-     
-        <!-- <el-form-item label="定位：" prop="location" style="visibility: hidden;">
-          <el-input type="password" v-model="ruleForm2.confirm" style="width:250px"></el-input>
-        </el-form-item> -->
-    
       <div>
       <el-form-item class="bottom">
           <el-button type="primary" @click="submitForm('ruleForm2')">提交</el-button>
@@ -141,6 +135,7 @@ export default {
         wd: "",
         site: ""
       },
+      city:"",
       permitImageUrl: "",
       logoImageUrl: "",
       ruleForm2: {
@@ -216,9 +211,12 @@ export default {
       this.zoom = e.target.getZoom();
       console.log(this.postionMap.lng, "经纬度");
       let geocoder = new BMap.Geocoder(); //创建地址解析器的实例
-      geocoder.getLocation(e.point, rs => {
-        this.add.site = rs.address;
-        this.ruleForm2.permitAddr = rs.address
+      geocoder.getLocation(e.point, res => {
+        console.log(res);
+        this.add.site = res.address;
+        this.ruleForm2.permitAddr = res.address;
+        this.city = res.addressComponents.city;
+        console.log(this.city,"城市")
         // console.log(this.add.site, "位置信息");
       });
     },
@@ -264,7 +262,8 @@ export default {
               permitImage: this.ruleForm2.permitImage,
               logo: this.ruleForm2.logo,
               id: userId,
-              location: this.postionMap
+              location: this.postionMap,
+              city:this.city,
             }
           }).then(res => {
             this.$router.push("/shopApplying");
