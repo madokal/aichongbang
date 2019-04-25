@@ -81,6 +81,7 @@ export default {
 .total {
     width: 50%;
     height: 500px;
+    margin-left: 20%
 }
 
 </style>

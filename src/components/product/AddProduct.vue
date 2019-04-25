@@ -132,7 +132,7 @@ export default {
           userId = res.data[0]._id;
           let data = { ...this.form };
           data.id = userId;
-          console.log(data);
+          // console.log(data);
           this.addProduct(data);
           this.dialogFormVisible = false;
           let page = this.pagenation.curpage;
