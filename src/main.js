@@ -2,8 +2,9 @@ import Vue from "vue";
 import App from "./App";
 import router from './router'
 import store from './store'
+import echarts from 'echarts'
 import "./plugins/element.js";
-
+Vue.prototype.$echarts = echarts
 Vue.config.productionTip = false;
 new Vue({
   router,
