@@ -266,14 +266,14 @@ export default {
               city:this.city,
             }
           }).then(res => {
-            this.$router.push("/shopApplying");
             axios({
-              url: "/userSys/" + userId,
+              url: "/shopApply/" + userId,
               method: "put",
               data: { storeStatus: "待审核" }
             }).then(res => {
               console.log(res);
             });
+            this.$router.push("/shopApplying");
           });
         } else {
           console.log("error submit!!");

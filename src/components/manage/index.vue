@@ -48,15 +48,17 @@ export default {
         this.$router.replace("/login");
       });
     },
-     getSession() {
+    getSession() {
       axios({
         method: "get",
         url: "/login/getSession"
-      }).then(res => {
-        if (this.user.tel) {
-            this.user = res.data;     
+      }).then((res) => {
+        if (!res.data.tel) {
+          this.$router.replace("/login");
         } else {
-            this.$router.push("/login");
+          if (!this.user.tel) {
+            this.user = res.data;
+          }
         }
       });
     }
