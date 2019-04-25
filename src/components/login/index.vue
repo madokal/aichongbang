@@ -66,50 +66,42 @@ export default {
       if (!value) {
         return callback(new Error("账号不能为空"));
       }
-      setTimeout(() => {
         if (value.toString().length != 11) {
           callback(new Error("账号格式不正确"));
         } else {
           callback();
         }
-      });
     };
     var validatetel = (rule, value, callback) => {
       if (value === "") {
         callback(new Error("请输入密码"));
       }
-      setTimeout(() => {
         if (value.toString().length < 6) {
           callback(new Error("密码不少于6位"));
         } else {
           callback();
         }
-      });
     };
     //管理员登录验证
     var checktel2 = (rule, value, callback) => {
       if (!value) {
         return callback(new Error("账号不能为空"));
       }
-      setTimeout(() => {
         if (value.toString().length != 11) {
           callback(new Error("账号格式不正确"));
         } else {
           callback();
         }
-      });
     };
     var validatetel2 = (rule, value, callback) => {
       if (value === "") {
         callback(new Error("请输入密码"));
       }
-      setTimeout(() => {
         if (value.toString().length < 6) {
           callback(new Error("密码不少于6位"));
         } else {
           callback();
         }
-      });
     };
 
     return {
@@ -137,9 +129,9 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         axios({
-              method: "post",
-              url: "/login/dengs",
-              data: {
+              method: "get",
+              url: "/login/login",
+              params: {
                 tel: this.$refs[formName].model.tel,
                 pwd: this.$refs[formName].model.pwd
               }
@@ -172,9 +164,10 @@ export default {
       //管理员登录
     submitForm2(formName) {
       this.$refs[formName].validate(valid => {
-           axios({
+        if(valid){
+axios({
               method: "post",
-              url: "/login/deng",
+              url: "/login/login",
               data: {
                 tel: this.$refs[formName].model.tel2,
                 pwd: this.$refs[formName].model.pwd2
@@ -188,6 +181,8 @@ export default {
                 alert("你不是管理员或账号密码错误，请重新输入");
               }
             });
+        }
+           
       });
     },
     resetForm2(formName) {
