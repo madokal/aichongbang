@@ -141,12 +141,10 @@ export default {
       this.count = 2;
     },
     handleClick(row) {
-      console.log(row);
       this.details = row;
       this.dialogVisible = true;
     },
     trueClick(row) {
-      console.log(row, "true");
       if (row.userStatus) {
         //用户已确认订单
         axios({
@@ -154,7 +152,6 @@ export default {
           url: "/order/" + row._id,
           data: { status: row.status, id: row._id }
         }).then(res => {
-          console.log(res.data, "修改");
           this.getOrders({ allOrders: "服务" });
         });
       } else {
@@ -184,7 +181,7 @@ export default {
         this.getOrders({ rows: val, orderStatus: "服务等待中" });
       }
       this.rows = val;
-      console.log(`每页 ${val} 条`);
+      // console.log(`每页 ${val} 条`);
     },
     handleCurrentChange(val) {
       let rows = this.rows;
@@ -195,7 +192,7 @@ export default {
       } else {
         this.getOrders({ page: val, rows, orderStatus: "服务等待中" });
       }
-      console.log(`当前页: ${val}`);
+      // console.log(`当前页: ${val}`);
     }
   }
 };

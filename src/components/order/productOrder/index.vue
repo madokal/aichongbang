@@ -171,7 +171,6 @@ export default {
       this.count == 2;
     },
     handleClick(row) {
-      console.log(row, "row");
       // var outTradeNo = ""; //订单号
       // for (
       //   var i = 0;
