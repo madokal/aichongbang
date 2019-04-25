@@ -18,6 +18,8 @@ import Supplier from "./components/supplier";
 import UserSys from "./components/userSys";
 import ShopApplying from "./components/shopApplying";
 import shopApplyed from "./components/shopApplyed";
+import ShopManager from "./components/ShopManager";
+
 
 
 
@@ -36,7 +38,8 @@ const routes = [
       { path: "/manage/userSys", component: UserSys },
       { path: "/manage/petMaster", component: PetMaster },
       { path: "/manage/shopSys", component: ShopSys },
-      { path: "/manage/supplier", component: Supplier }
+      { path: "/manage/supplier", component: Supplier },
+      { path: "/manage/shopManager", component: ShopManager },
 
     ]
   }, {
@@ -50,13 +53,14 @@ const routes = [
 
       { path: "/shopManage/order/productOrder", component: ProductOrder },
       { path: "/shopManage/order/serveOrder", component: ServeOrder },
-      { path: "/shopManage/statistics/manageCityServeTotal", component: ManageCityServeTotal },
-      { path: "/shopManage/statistics/manageCityTradeTotal", component: ManageCityTradeTotal },
-      { path: "/shopManage/statistics/manageServeTotal", component: ManageServeTotal },
-      { path: "/shopManage/statistics/manageTradeTotal", component: ManageTradeTotal },
-      { path: "/shopManage/statistics/mapCityShopStatistics", component: MapCityShopStatistics },
-      { path: "/shopManage/statistics/shopServeTotal", component: ShopServeTotal },
-      { path: "/shopManage/statistics/shopTradeTotal", component: ShopTradeTotal },
+      // { path: "/shopManage/statistics/manageCityServeTotal", component: ManageCityServeTotal },
+      // { path: "/shopManage/statistics/manageCityTradeTotal", component: ManageCityTradeTotal },
+      // { path: "/shopManage/statistics/manageServeTotal", component: ManageServeTotal },
+      // { path: "/shopManage/statistics/manageTradeTotal", component: ManageTradeTotal },
+      // { path: "/shopManage/statistics/mapCityShopStatistics", component: MapCityShopStatistics },
+      // { path: "/shopManage/statistics/shopServeTotal", component: ShopServeTotal },
+      // { path: "/shopManage/statistics/shopTradeTotal", component: ShopTradeTotal },
+  
     ]
   }
 ];
