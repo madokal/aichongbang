@@ -141,6 +141,7 @@ export default {
         wd: "",
         site: ""
       },
+      city:"",
       permitImageUrl: "",
       logoImageUrl: "",
       ruleForm2: {
@@ -216,9 +217,12 @@ export default {
       this.zoom = e.target.getZoom();
       console.log(this.postionMap.lng, "经纬度");
       let geocoder = new BMap.Geocoder(); //创建地址解析器的实例
-      geocoder.getLocation(e.point, rs => {
-        this.add.site = rs.address;
-        this.ruleForm2.permitAddr = rs.address
+      geocoder.getLocation(e.point, res => {
+        console.log(res);
+        this.add.site = res.address;
+        this.ruleForm2.permitAddr = res.address;
+        this.city = res.addressComponents.city;
+        console.log(this.city,"城市")
         // console.log(this.add.site, "位置信息");
       });
     },
@@ -264,7 +268,8 @@ export default {
               permitImage: this.ruleForm2.permitImage,
               logo: this.ruleForm2.logo,
               id: userId,
-              location: this.postionMap
+              location: this.postionMap,
+              city:this.city,
             }
           }).then(res => {
             this.$router.push("/shopApplying");
