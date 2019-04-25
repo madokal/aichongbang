@@ -58,21 +58,26 @@ export default {
         type: "warning"
       })
         .then(() => {
-          let storeId="5cbaf6105caaca6f075a087e";
           axios({
-            method: "delete",
-            url: "/service/serviceType/"+row._id,
-            data:{
-              storeId
-            }
+            method: "get",
+            url: "/service/getSession"
           }).then(res => {
-            if (res.data.status == 1) {
-              this.$message({
-                type: "success",
-                message: "删除成功!"
-              });
-              this.setServiceTypes();
-            }
+            let storeId = res.data;
+            axios({
+              method: "delete",
+              url: "/service/serviceType/" + row._id,
+              data: {
+                storeId
+              }
+            }).then(res => {
+              if (res.data.status == 1) {
+                this.$message({
+                  type: "success",
+                  message: "删除成功!"
+                });
+                this.setServiceTypes();
+              }
+            });
           });
         })
         .catch(() => {

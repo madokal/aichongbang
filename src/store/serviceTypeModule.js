@@ -5,7 +5,7 @@ export default {
     serviceTypes: [],
     serviceType: {
       _id: "",
-      name:"",
+      name: "",
       priceTypes: {
         gold: "",
         platinum: "",
@@ -44,15 +44,20 @@ export default {
       let rows = rule.rows || 5;
       let type = rule.type || "";
       let value = rule.value || "";
-      let storeId = "5cbaf6105caaca6f075a087e";
       axios({
         method: "get",
-        url: "/service/getServiceType",
-        params: { page, rows, type, value, storeId }
+        url: "/service/getSession",
       }).then(res => {
-        commit("setServiceTypes", res.data.rows);
-        commit("setPagination", res.data);
-      });
+        let storeId = res.data;
+        axios({
+          method: "get",
+          url: "/service/getServiceType",
+          params: { page, rows, type, value, storeId }
+        }).then(res => {
+          commit("setServiceTypes", res.data.rows);
+          commit("setPagination", res.data);
+        });
+      })
     },
     setServiceType({ commit }, id) {
       axios({
