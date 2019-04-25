@@ -68,7 +68,7 @@ export default {
       axios({
         method: "get",
         url: "/login/getSession"
-      }).then(({ data }) => {
+      }).then(({data}) => {
         if (!data.userName) {
           this.$router.replace("/login");
         } else {
@@ -79,6 +79,7 @@ export default {
       });
     }
   },
+
   beforeupdate() {
     console.log("before");
     this.getSession();

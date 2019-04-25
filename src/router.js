@@ -16,7 +16,6 @@ import ShopManage from "./components/shopManage";
 import ShopSys from "./components/shopSys";
 import Supplier from "./components/supplier";
 import UserSys from "./components/userSys";
-import shopApply from "./components/shopApply";
 import ShopApplying from "./components/shopApplying";
 import ShopApplyed from "./components/shopApplyed";
 import ManageCityServeTotal from "./components/statistics/manageCityServeTotal";
@@ -26,6 +25,9 @@ import ManageTradeTotal from "./components/statistics/manageTradeTotal";
 import MapCityShopStatistics from "./components/statistics/mapCityShopStatistics";
 import ShopServeTotal from "./components/statistics/shopServeTotal";
 import ShopTradeTotal from "./components/statistics/shopTradeTotal";
+import ShopManager from "./components/ShopManager";
+
+
 
 
 Vue.use(VueRouter);
@@ -44,7 +46,8 @@ const routes = [
       { path: "/manage/userSys", component: UserSys },
       { path: "/manage/petMaster", component: PetMaster },
       { path: "/manage/shopSys", component: ShopSys },
-      { path: "/manage/supplier", component: Supplier }
+      { path: "/manage/supplier", component: Supplier },
+      { path: "/manage/shopManager", component: ShopManager },
 
     ]
   }, {
@@ -64,6 +67,7 @@ const routes = [
       { path: "/shopManage/statistics/mapCityShopStatistics", component: MapCityShopStatistics },
       { path: "/shopManage/statistics/shopServeTotal", component: ShopServeTotal },
       { path: "/shopManage/statistics/shopTradeTotal", component: ShopTradeTotal },
+  
     ]
   }
 ];
