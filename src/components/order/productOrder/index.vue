@@ -15,7 +15,14 @@
       ></el-table-column>
       <el-table-column prop="orderNum" label="订单号" width="120" :show-overflow-tooltip="true"></el-table-column>
       <el-table-column prop="commodities.name" label="商品" width="120" :show-overflow-tooltip="true"></el-table-column>
-      <el-table-column prop="commodities.price" label="价格" width="120"></el-table-column>
+      <el-table-column
+        prop="commodities.price"
+        label="单价"
+        width="120"
+        :show-overflow-tooltip="true"
+      ></el-table-column>
+      <el-table-column prop="counts" label="数量" width="120" :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column prop="totalPrice" label="总价" width="120"></el-table-column>
       <el-table-column prop="stores.name" label="店铺" width="120" :show-overflow-tooltip="true"></el-table-column>
       <el-table-column prop="status" label="状态" width="120"></el-table-column>
       <el-table-column label="操作" width="200">
@@ -59,7 +66,15 @@
       </div>
       <div>
         <span class="rig">建议零售价：</span>
-        <span>{{details.commodities.price}}</span>
+        <span>￥{{details.commodities.price}}</span>
+      </div>
+      <div>
+        <span class="rig">购买数量：</span>
+        <span>{{details.counts}}</span>
+      </div>
+      <div>
+        <span class="rig">{{details.userStatus?"实付总金额：":"待付总金额："}}</span>
+        <span>￥{{details.totalPrice}}</span>
       </div>
       <div>
         <span class="rig">产地：</span>
@@ -108,43 +123,52 @@
         <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
       </span>
     </el-dialog>
-    <OrderPage :orders="orders"/>
+    <el-pagination
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page.sync="pagenation.curpage"
+      :page-size="pagenation.eachpage"
+      :page-sizes="[1,3,5,8,10,15,20,30]"
+      layout="total, prev, pager, next, sizes"
+      :total="pagenation.total">
+    </el-pagination>
   </div>
 </template>
 
 
 <script>
 import axios from "axios";
-import OrderPage from "../OrderPage.vue"
 import { createNamespacedHelpers } from "vuex";
 const { mapActions, mapState } = createNamespacedHelpers("orderModule");
 export default {
-  components:{
-    OrderPage
-  },
   data() {
     return {
       dialogVisible: false,
-      details: ""
+      details: "",
+      count:0,
+      rows:0
     };
   },
   computed: {
     ...mapState(["orders", "pagenation"])
   },
   created() {
-    this.getOrders({ allOrders: "订单" });
-    console.log(this.pagenation, "分页");
+    this.getOrders({ orderDeal: "交易" });
   },
   methods: {
     ...mapActions(["getOrders"]),
+    //分页
     all() {
-      this.getOrders({ allOrders: "订单" });
+      this.getOrders({ orderDeal: "交易" });
+      this.count == 0;
     },
     success() {
-      this.getOrders({ allOrders: "完成交易" });
+      this.getOrders({ orderStatus: "完成交易" });
+      this.count == 1;
     },
     wait() {
-      this.getOrders({ allOrders: "等待交易" });
+      this.getOrders({ orderStatus: "等待交易" });
+      this.count == 2;
     },
     handleClick(row) {
       console.log(row, "row");
@@ -162,7 +186,6 @@ export default {
       this.dialogVisible = true;
     },
     trueClick(row) {
-      console.log(row, "true", row.status, row._id);
       if (row.userStatus) {
         //用户已确认订单
         axios({
@@ -170,7 +193,6 @@ export default {
           url: "/order/" + row._id,
           data: { status: row.status, id: row._id }
         }).then(res => {
-          console.log(res.data, "修改");
           this.getOrders({ allOrders: "订单" });
         });
       } else {
@@ -192,13 +214,26 @@ export default {
       }
     },
     handleSizeChange(val) {
-      this.getOrders({ rows: val });
-      console.log(`每页 ${val} 条`);
+      if( this.count == 0){
+        this.getOrders({rows:val, orderDeal: "交易"})
+      }else if( this.count == 1){
+        this.getOrders({rows:val, orderStatus: "完成交易"})
+      }else{
+        this.getOrders({rows:val, orderStatus: "等待交易"})
+      }
+      this.rows=val;
+      // console.log(`每页 ${val} 条`);
     },
     handleCurrentChange(val) {
-      this.getOrders({ page: val });
-
-      console.log(`当前页: ${val}`);
+      let rows=this.rows;
+      if( this.count == 0){
+        this.getOrders({page:val, rows,orderDeal: "交易"})
+      }else if( this.count == 1){
+        this.getOrders({page:val,rows, orderStatus: "完成交易"})
+      }else{
+        this.getOrders({page:val,rows, orderStatus: "等待交易"})
+      }
+      // console.log(`当前页: ${val}`);
     }
   }
 };
