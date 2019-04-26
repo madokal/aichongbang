@@ -117,13 +117,16 @@ export default {
       values: "",
       options: [
         {
-          values: "userName"
+          values: "userName",
+          label:"昵称"
         },
         {
-          values: "trueName"
+          values: "trueName",
+          label:"姓名"
         },
         {
-          values: "vip"
+          values: "vip",
+          label:"VIP"
         }
       ]
     };

@@ -100,6 +100,7 @@ export default {
           {
             name: "销量",
             type: "bar",
+            barWidth:"30%",
             data: this.dataOrderNew
           }
         ]
