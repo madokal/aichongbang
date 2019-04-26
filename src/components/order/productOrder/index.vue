@@ -153,10 +153,16 @@ export default {
     ...mapState(["orders", "pagenation", "storeId"])
   },
   created() {
-    console.log(this.orders,"orders");
+    this.$nextTick(() => {
+      this.getStoreId();
+    });
+  },
+  mounted(){
+    this.$nextTick(() => {
+      console.log(this.orders,"orders");
     console.log(this.storeId,"storeId");
     this.getOrders({ orderDeal: "交易", storeId: this.storeId });
-    this.getStoreId();
+    });
   },
   methods: {
     ...mapActions(["getOrders", "getStoreId"]),
