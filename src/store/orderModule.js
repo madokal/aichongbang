@@ -5,12 +5,17 @@ export default {
         orders: [],
         dealSuccess: [],
         dealWait: [],
-        pagenation: {}
+        pagenation: {},
+        session: {}
     },
     mutations: {
         setOrders(state, orders) {
             state.orders = orders;
+<<<<<<< HEAD
+            console.log(state.orders, "or")
+=======
             // console.log(state.orders,"or")
+>>>>>>> f903e98dc7642668174bdcf3c80a08b92c99b1d0
         },
         setDealSuccess(state, dealSuccess) {
             state.dealSuccess = dealSuccess;
@@ -20,34 +25,49 @@ export default {
         },
         setPagenation(state, pagenation) {
             state.pagenation = pagenation;
+        },
+        setSession(state, session) {
+            state.session = session;
         }
     },
     actions: {
         getOrders({ commit }, rule = {}) {
-            let allOrders = rule.allOrders || "";
+            let orderStatus = rule.orderStatus || "";
+            let orderDeal = rule.orderDeal || "";
             let type = rule.type || "";
             let value = rule.value || "";
-            if (allOrders == "订单" || allOrders == "服务") {
+            let page = rule.page || 1;
+            let rows = rule.rows || 3;
+            if (orderStatus) {
                 axios({
                     method: "get",
                     url: "/order",
-                    params: { type, value, allOrders }
+                    params: { page, rows, type, value, status: orderStatus }
                 }).then(res => {
-                    console.log(res.data, "ppp,修改")
-                    commit("setOrders", res.data);
+                    console.log(res.data, "orderStatus,修改")
+                    commit("setOrders", res.data.rows);
                     commit("setPagenation", res.data);
                 });
-            } else {
+            } else if (orderDeal) {
                 axios({
                     method: "get",
-                    url: "/order/orders",
-                    params: {  type, value, allOrders }
+                    url: "/order",
+                    params: { page, rows, type, value, deal: orderDeal }
                 }).then(res => {
-                    console.log(res.data, "ssss")
-                    commit("setOrders", res.data);
+                    console.log(res.data, "orderDeal,修改")
+                    commit("setOrders", res.data.rows);
                     commit("setPagenation", res.data);
                 });
             }
+        },
+        getSession({ commit }) {
+            axios({
+                method: "get",
+                url: "/order/getSession"
+            }).then((res) => {
+                console.log(res.data, "session");
+                commit("setSession", res.data);
+            });
         }
     }
 }

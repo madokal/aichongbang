@@ -1,9 +1,9 @@
 <template>
   <div>
     <el-button-group>
-      <el-button @click="all">所有订单</el-button>
-      <el-button @click="success">已交易订单</el-button>
-      <el-button @click="wait">未交易订单</el-button>
+      <el-button @click="all">所有服务单</el-button>
+      <el-button @click="success">已完成服务单</el-button>
+      <el-button @click="wait">未完成服务单</el-button>
     </el-button-group>
     <el-table :data="orders" border style="width: 100%">
       <el-table-column
@@ -57,10 +57,10 @@
       </div>
       <div>
         <span class="rig">一次性服务价：</span>
-        <span>{{details.service.price}}</span>
+        <span>￥{{details.service.price}}</span>
       </div>
       <div>
-        <span class="rig">服务总耗时：</span>
+        <span class="rig">{{details.userStatus?"服务总耗时：":"预计服务总耗时："}}</span>
         <span>{{details.service.time}}</span>
       </div>
       <div>
@@ -94,6 +94,15 @@
         <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
       </span>
     </el-dialog>
+    <el-pagination
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page.sync="pagenation.curpage"
+      :page-size="pagenation.eachpage"
+      :page-sizes="[1,3,5,8,10,15,20,30]"
+      layout="total, prev, pager, next, sizes"
+      :total="pagenation.total"
+    ></el-pagination>
   </div>
 </template>
 
@@ -106,33 +115,36 @@ export default {
     return {
       activeName: "first",
       dialogVisible: false,
-      details: ""
+      details: "",
+      count: 0,
+      rows: 0
     };
   },
   computed: {
     ...mapState(["orders", "pagenation"])
   },
   created() {
-    this.getOrders({ allOrders: "服务" });
+    this.getOrders({ orderDeal: "服务" });
   },
   methods: {
     ...mapActions(["getOrders"]),
     all() {
-      this.getOrders({ allOrders: "服务" });
+      this.getOrders({ orderDeal: "服务" });
+      this.count = 0;
     },
     success() {
-      this.getOrders({ allOrders: "服务已完成" });
+      this.getOrders({ orderStatus: "服务已完成" });
+      this.count = 1;
     },
     wait() {
-      this.getOrders({ allOrders: "服务等待中" });
+      this.getOrders({ orderStatus: "服务等待中" });
+      this.count = 2;
     },
     handleClick(row) {
-      console.log(row);
       this.details = row;
       this.dialogVisible = true;
     },
     trueClick(row) {
-      console.log(row, "true");
       if (row.userStatus) {
         //用户已确认订单
         axios({
@@ -140,7 +152,6 @@ export default {
           url: "/order/" + row._id,
           data: { status: row.status, id: row._id }
         }).then(res => {
-          console.log(res.data, "修改");
           this.getOrders({ allOrders: "服务" });
         });
       } else {
@@ -160,6 +171,28 @@ export default {
         //   this.getOrders({ allOrders: "订单" });
         // });
       }
+    },
+    handleSizeChange(val) {
+      if (this.count == 0) {
+        this.getOrders({ rows: val, orderDeal: "服务", ...Option });
+      } else if (this.count == 1) {
+        this.getOrders({ rows: val, orderStatus: "服务已完成" });
+      } else {
+        this.getOrders({ rows: val, orderStatus: "服务等待中" });
+      }
+      this.rows = val;
+      // console.log(`每页 ${val} 条`);
+    },
+    handleCurrentChange(val) {
+      let rows = this.rows;
+      if (this.count == 0) {
+        this.getOrders({ page: val, rows, orderDeal: "服务" });
+      } else if (this.count == 1) {
+        this.getOrders({ page: val, rows, orderStatus: "服务已完成" });
+      } else {
+        this.getOrders({ page: val, rows, orderStatus: "服务等待中" });
+      }
+      // console.log(`当前页: ${val}`);
     }
   }
 };
