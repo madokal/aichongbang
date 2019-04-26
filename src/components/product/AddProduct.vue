@@ -76,8 +76,6 @@
 
 
 
-
-
     <el-form-item class="btn">
           <el-button @click="addNo('addForm')">取 消</el-button>
           <el-button type="primary" @click="add('addForm')">确 定</el-button>
@@ -97,20 +95,20 @@ export default {
   },
   data() {
     return {
-      name:"",
-      commodityType:"",
-      textureOrMade:"",
-      size:"",
-      exclusiveSize:"",
-      weight:"",
-      taste:"",
-      specialFunc:"",
-      palce:"",
-      madeDate:"",
-      shelfLife:"",
-      supplier:"",
-      info:"",
-      price:"",
+      name: "",
+      commodityType: "",
+      textureOrMade: "",
+      size: "",
+      exclusiveSize: "",
+      weight: "",
+      taste: "",
+      specialFunc: "",
+      palce: "",
+      madeDate: "",
+      shelfLife: "",
+      supplier: "",
+      info: "",
+      price: "",
       pictures: "",
       dialogFormVisible: false,
       form: {
@@ -128,32 +126,37 @@ export default {
     ...mapActions(["addProduct", "getProducts"]),
     addNo(form) {
       this.dialogFormVisible = false;
+       this.$refs.addForm.resetFields();
     },
     //添加功能按钮
     add(form) {
       let userId = "";
-      axios({
-        method: "get",
-        url: "/login/getSession"
-      }).then(res => {
-        let id = res.data._id;
+      if (!this.pictures) {
+        alert("请选择图片");
+      } else {
         axios({
           method: "get",
-          url: "/product/shop",
-          params: { id }
+          url: "/login/getSession"
         }).then(res => {
-          userId = res.data[0]._id;
-          let data = { ...this.form };
-          data.id = userId;
-          // console.log(data);
-          this.addProduct(data);
-          this.dialogFormVisible = false;
-          let page = this.pagenation.curpage;
-          this.getProducts({ page });
-          this.$refs.addForm.resetFields();
-          this.pictures=""
+          let id = res.data._id;
+          axios({
+            method: "get",
+            url: "/product/shop",
+            params: { id }
+          }).then(res => {
+            userId = res.data[0]._id;
+            let data = { ...this.form };
+            data.id = userId;
+
+            this.addProduct(data);
+            this.dialogFormVisible = false;
+            let page = this.pagenation.curpage;
+            this.getProducts({ page });
+            this.$refs.addForm.resetFields();
+            this.pictures = "";
+          });
         });
-      });
+      }
     }
   }
 };
