@@ -105,7 +105,7 @@ export default {
         axios({
           method: "put",
           url: "/shopSys/auditshop/" + id,
-          data: { storeStatus: 1 }
+          data: { storeStatus: "1" }
         }).then(() => {
           this.setNoshops();
           this.setAuditVisible(false);
@@ -122,7 +122,7 @@ export default {
         axios({
           method: "put",
           url: "/shopSys/auditshop/" + id,
-          data: { storeStatus: 2 }
+          data: { storeStatus: "2" }
         }).then(() => {
           this.setShopsed();
           this.setAuditVisible(false);
@@ -139,14 +139,14 @@ export default {
         axios({
           method: "put",
           url: "/shopSys/auditshop/" + id,
-          data: { storeStatus: 1 }
+          data: { storeStatus: "1" }
         }).then(() => {
           this.setCloseshops();
           this.setAuditVisible(false);
         });
 
         axios({
-          url: "/shopApply/" + this.userId,
+          url: "/shopApply/users/" + this.userId,
           method: "put",
           data: { storeStatus: "已开店" }
         }).then(res => {
