@@ -5,8 +5,7 @@ export default {
         orders: [],
         dealSuccess: [],
         dealWait: [],
-        pagenation: {},
-        storeId: ""
+        pagenation: {}
     },
     mutations: {
         setOrders(state, orders) {
@@ -20,10 +19,6 @@ export default {
         },
         setPagenation(state, pagenation) {
             state.pagenation = pagenation;
-        },
-        setStoreId(state, storeId) {
-            state.storeId = storeId;
-            console.log(storeId,"storeId")
         }
     },
     actions: {
@@ -56,25 +51,6 @@ export default {
                     commit("setPagenation", res.data);
                 });
             }
-        },
-        getStoreId({ commit }) {
-            axios({
-                method: "get",
-                url: "/order/getSession"
-            }).then((res) => {
-                let userId = res.data._id;
-                axios({
-                    method:"post",
-                    url:"/order/"+userId,
-                    data:{
-                        id:userId
-                    }
-                }).then((res)=>{
-                    console.log(res.data,"store")
-                    let storesId = res.data[0]._id;
-                    commit("setStoreId", storesId);
-                });
-            });
         }
     }
 }
