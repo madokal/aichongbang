@@ -63,17 +63,17 @@
         </el-form-item>
 
       
-    <el-form-item  label="上传图片"  prop="pictures">
+    <el-form-item  label="上传图片"  prop="pictures" style="width:100px;">
         <el-upload
           class="avatar-uploader"
           action="/product/upload"
           :on-success="handleSuccess"
+          :limit="1"
          >
           <img v-if="pictures" :src="pictures" class="avatar" >
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
        </el-upload>
    </el-form-item> 
-
 
 
     <el-form-item class="btn">
@@ -88,10 +88,10 @@
 <script>
 import axios from "axios";
 import { createNamespacedHelpers } from "vuex";
-const { mapActions, mapState } = createNamespacedHelpers("productModule");
+const { mapActions, mapState, mapMutations } = createNamespacedHelpers("productModule");
 export default {
   computed: {
-    ...mapState(["pagenation"])
+    ...mapState(["pagenation","shopId"])
   },
   data() {
     return {
@@ -121,6 +121,7 @@ export default {
     handleSuccess(response, file, fileList) {
       this.pictures = "/upload/" + response;
       this.form.pictures = response;
+     
     },
 
     ...mapActions(["addProduct", "getProducts"]),
@@ -128,9 +129,10 @@ export default {
       this.dialogFormVisible = false;
        this.$refs.addForm.resetFields();
     },
+    ...mapMutations(["setShopId"]),
     //添加功能按钮
     add(form) {
-      let userId = "";
+      // console.log(this.pagenation)
       if (!this.pictures) {
         alert("请选择图片");
       } else {
@@ -144,15 +146,21 @@ export default {
             url: "/product/shop",
             params: { id }
           }).then(res => {
-            userId = res.data[0]._id;
+            this.setShopId(res.data[0]._id);
             let data = { ...this.form };
-            data.id = userId;
+            data.id =this.shopId;
+            // console.log(this.shopId,"1111")
+            
+
+
+
 
             this.addProduct(data);
             this.dialogFormVisible = false;
             let page = this.pagenation.curpage;
             this.getProducts({ page });
             this.$refs.addForm.resetFields();
+
             this.pictures = "";
           });
         });
@@ -180,6 +188,7 @@ export default {
 .avatar-uploader .el-upload:hover {
   border-color: #409eff;
 }
+
 .avatar-uploader-icon {
   font-size: 28px;
   color: #8c939d;
