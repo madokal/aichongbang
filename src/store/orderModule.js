@@ -11,11 +11,7 @@ export default {
     mutations: {
         setOrders(state, orders) {
             state.orders = orders;
-<<<<<<< HEAD
-            console.log(state.orders, "or")
-=======
             // console.log(state.orders,"or")
->>>>>>> f903e98dc7642668174bdcf3c80a08b92c99b1d0
         },
         setDealSuccess(state, dealSuccess) {
             state.dealSuccess = dealSuccess;
