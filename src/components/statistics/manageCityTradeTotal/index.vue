@@ -28,7 +28,10 @@ export default {
       serveSeriesData: [],
       option: {
         legend: {},
-        tooltip: {},
+        tooltip: {
+          trigger: "item",
+          formatter: ""
+        },
         dataset: {
           source: [["product", "一季度", "二季度", "三季度", "四季度"]]
         },
@@ -61,7 +64,7 @@ export default {
             status: "完成交易"
           }
         }).then(res => {
-          console.log(res.data, "456");
+          // console.log(res.data, "456");
           this.serveAxisData = res.data.axisData;
           this.serveSeriesData = res.data.seriesData;
           myChart.setOption(this.serveOptions, true);
@@ -92,7 +95,7 @@ export default {
         },
         series: [
           {
-            name: "城市",
+            name: "",
             type: "pie",
             radius: "70%",
             center: ["50%", "60%"],

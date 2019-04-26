@@ -2,8 +2,8 @@ import axios from "axios";
 export default {
   namespaced: true,
   state: {
-     products: [],
-     product: {
+      products: [],
+      product: {
       name: "",
       commodityType: "",
       textureOrMade: "",
@@ -20,9 +20,10 @@ export default {
       price: "",
       pictures: "",
       id: "",
-      visible: false
+      visible: false,
+      shopId:""
     },
-    searchRule: {
+      searchRule: {
       type: "",
       value: ""
     },
@@ -44,17 +45,19 @@ export default {
     setPagenation(state, pagenation) {
       state.pagenation = pagenation;
     },
-    
+    setShopId(state, shopId) {
+      state.shopId = shopId;
+    },
   },
   actions: {
-    getProducts({ commit }, rule = {}) {
+    getProducts({ commit,state }, rule = {}) {
       let page = rule.page || 1;
-      let rows = rule.rows || 10;
+      let rows = rule.rows || 5;
       let type = rule.type || "";
       let value = rule.value || "";
       axios({
         method: "get",
-        url: "/product",
+        url: "/product/"+state.shopId,
         params: { page, rows, type, value }
       }).then(res => {
         commit("setProducts", res.data.rows);
