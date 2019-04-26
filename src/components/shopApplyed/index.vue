@@ -10,7 +10,7 @@
             <span slot="footer" class="dialog-footer">
                 <el-button type="danger" @click="handleBtn">确 定</el-button>
             </span>
-</el-dialog>
+        </el-dialog>
 
       
     </div>

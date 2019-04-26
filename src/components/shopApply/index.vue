@@ -29,7 +29,7 @@
           >
           <div>
             <!--地图模块-->
-            <label>地址：<input v-model="keyword"></label>
+            <label>地址：<input v-model="keyword" ></label>
             <br>    
             <!-- getPoint方法，给地图加点击事件，点击地图获取所需要的信息，-->
             <!--scroll-wheel-zoom属性是否可以用鼠标滚轮控制地图缩放-->
@@ -57,7 +57,7 @@
        </template>
       </el-form-item>
       <el-form-item label="营业地址：" >
-        <el-input v-model="ruleForm2.permitAddr" :v-model="keyword" style="width:250px"></el-input>
+        <el-input v-model="ruleForm2.permitAddr" style="width:250px"></el-input>
       </el-form-item>
       <el-form-item label="营业执照号码：" prop="permitNum">
           <el-input v-model="ruleForm2.permitNum" style="width:250px"></el-input>
