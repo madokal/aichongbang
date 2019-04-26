@@ -51,9 +51,9 @@
 </template>
 
 <script>
-import {mapActions} from 'vuex'
+import {createNamespacedHelpers} from 'vuex';
+const {mapState,mapActions,mapMutations}=createNamespacedHelpers("newModule");
 import axios from "axios";
-// const{mapActions}=createNamespacedHeloers("studentModule");
 export default {
   data() {
     return {
