@@ -6,16 +6,11 @@ export default {
         dealSuccess: [],
         dealWait: [],
         pagenation: {},
-        session: {}
+        storeId: ""
     },
     mutations: {
         setOrders(state, orders) {
             state.orders = orders;
-<<<<<<< HEAD
-            console.log(state.orders, "or")
-=======
-            // console.log(state.orders,"or")
->>>>>>> f903e98dc7642668174bdcf3c80a08b92c99b1d0
         },
         setDealSuccess(state, dealSuccess) {
             state.dealSuccess = dealSuccess;
@@ -26,12 +21,14 @@ export default {
         setPagenation(state, pagenation) {
             state.pagenation = pagenation;
         },
-        setSession(state, session) {
-            state.session = session;
+        setStoreId(state, storeId) {
+            state.storeId = storeId;
+            console.log(storeId,"storeId")
         }
     },
     actions: {
         getOrders({ commit }, rule = {}) {
+            let storeId = rule.storeId || "";
             let orderStatus = rule.orderStatus || "";
             let orderDeal = rule.orderDeal || "";
             let type = rule.type || "";
@@ -42,7 +39,7 @@ export default {
                 axios({
                     method: "get",
                     url: "/order",
-                    params: { page, rows, type, value, status: orderStatus }
+                    params: { page, rows, type, value, status: orderStatus,storeId }
                 }).then(res => {
                     console.log(res.data, "orderStatus,修改")
                     commit("setOrders", res.data.rows);
@@ -52,7 +49,7 @@ export default {
                 axios({
                     method: "get",
                     url: "/order",
-                    params: { page, rows, type, value, deal: orderDeal }
+                    params: { page, rows, type, value, deal: orderDeal,storeId }
                 }).then(res => {
                     console.log(res.data, "orderDeal,修改")
                     commit("setOrders", res.data.rows);
@@ -60,13 +57,23 @@ export default {
                 });
             }
         },
-        getSession({ commit }) {
+        getStoreId({ commit }) {
             axios({
                 method: "get",
                 url: "/order/getSession"
             }).then((res) => {
-                console.log(res.data, "session");
-                commit("setSession", res.data);
+                let userId = res.data._id;
+                axios({
+                    method:"post",
+                    url:"/order/"+userId,
+                    data:{
+                        id:userId
+                    }
+                }).then((res)=>{
+                    console.log(res.data,"store")
+                    let storesId = res.data[0]._id;
+                    commit("setStoreId", storesId);
+                });
             });
         }
     }

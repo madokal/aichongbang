@@ -121,23 +121,24 @@ export default {
     };
   },
   computed: {
-    ...mapState(["orders", "pagenation"])
+    ...mapState(["orders", "pagenation", "storeId"])
   },
   created() {
-    this.getOrders({ orderDeal: "服务" });
+    this.getOrders({ orderDeal: "服务", storeId: this.storeId });
+    // this.getStoreId();
   },
   methods: {
     ...mapActions(["getOrders"]),
     all() {
-      this.getOrders({ orderDeal: "服务" });
+      this.getOrders({ orderDeal: "服务", storeId: this.storeId });
       this.count = 0;
     },
     success() {
-      this.getOrders({ orderStatus: "服务已完成" });
+      this.getOrders({ orderStatus: "服务已完成", storeId: this.storeId });
       this.count = 1;
     },
     wait() {
-      this.getOrders({ orderStatus: "服务等待中" });
+      this.getOrders({ orderStatus: "服务等待中", storeId: this.storeId });
       this.count = 2;
     },
     handleClick(row) {
@@ -152,7 +153,7 @@ export default {
           url: "/order/" + row._id,
           data: { status: row.status, id: row._id }
         }).then(res => {
-          this.getOrders({ allOrders: "服务" });
+          this.getOrders({ allOrders: "服务", storeId: this.storeId });
         });
       } else {
         //等待用户确认
@@ -174,11 +175,19 @@ export default {
     },
     handleSizeChange(val) {
       if (this.count == 0) {
-        this.getOrders({ rows: val, orderDeal: "服务", ...Option });
+        this.getOrders({ rows: val, orderDeal: "服务", storeId: this.storeId });
       } else if (this.count == 1) {
-        this.getOrders({ rows: val, orderStatus: "服务已完成" });
+        this.getOrders({
+          rows: val,
+          orderStatus: "服务已完成",
+          storeId: this.storeId
+        });
       } else {
-        this.getOrders({ rows: val, orderStatus: "服务等待中" });
+        this.getOrders({
+          rows: val,
+          orderStatus: "服务等待中",
+          storeId: this.storeId
+        });
       }
       this.rows = val;
       // console.log(`每页 ${val} 条`);
@@ -186,11 +195,26 @@ export default {
     handleCurrentChange(val) {
       let rows = this.rows;
       if (this.count == 0) {
-        this.getOrders({ page: val, rows, orderDeal: "服务" });
+        this.getOrders({
+          page: val,
+          rows,
+          orderDeal: "服务",
+          storeId: this.storeId
+        });
       } else if (this.count == 1) {
-        this.getOrders({ page: val, rows, orderStatus: "服务已完成" });
+        this.getOrders({
+          page: val,
+          rows,
+          orderStatus: "服务已完成",
+          storeId: this.storeId
+        });
       } else {
-        this.getOrders({ page: val, rows, orderStatus: "服务等待中" });
+        this.getOrders({
+          page: val,
+          rows,
+          orderStatus: "服务等待中",
+          storeId: this.storeId
+        });
       }
       // console.log(`当前页: ${val}`);
     }

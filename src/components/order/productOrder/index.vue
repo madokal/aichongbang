@@ -130,8 +130,8 @@
       :page-size="pagenation.eachpage"
       :page-sizes="[1,3,5,8,10,15,20,30]"
       layout="total, prev, pager, next, sizes"
-      :total="pagenation.total">
-    </el-pagination>
+      :total="pagenation.total"
+    ></el-pagination>
   </div>
 </template>
 
@@ -145,29 +145,32 @@ export default {
     return {
       dialogVisible: false,
       details: "",
-      count:0,
-      rows:0
+      count: 0,
+      rows: 0
     };
   },
   computed: {
-    ...mapState(["orders", "pagenation"])
+    ...mapState(["orders", "pagenation", "storeId"])
   },
   created() {
-    this.getOrders({ orderDeal: "交易" });
+    console.log(this.orders,"orders");
+    console.log(this.storeId,"storeId");
+    this.getOrders({ orderDeal: "交易", storeId: this.storeId });
+    this.getStoreId();
   },
   methods: {
-    ...mapActions(["getOrders"]),
+    ...mapActions(["getOrders", "getStoreId"]),
     //分页
     all() {
-      this.getOrders({ orderDeal: "交易" });
+      this.getOrders({ orderDeal: "交易", storeId: this.storeId });
       this.count == 0;
     },
     success() {
-      this.getOrders({ orderStatus: "完成交易" });
+      this.getOrders({ orderStatus: "完成交易", storeId: this.storeId });
       this.count == 1;
     },
     wait() {
-      this.getOrders({ orderStatus: "等待交易" });
+      this.getOrders({ orderStatus: "等待交易", storeId: this.storeId });
       this.count == 2;
     },
     handleClick(row) {
@@ -192,7 +195,7 @@ export default {
           url: "/order/" + row._id,
           data: { status: row.status, id: row._id }
         }).then(res => {
-          this.getOrders({ allOrders: "订单" });
+          this.getOrders({ allOrders: "订单", storeId: this.storeId });
         });
       } else {
         //等待用户确认
@@ -213,24 +216,47 @@ export default {
       }
     },
     handleSizeChange(val) {
-      if( this.count == 0){
-        this.getOrders({rows:val, orderDeal: "交易"})
-      }else if( this.count == 1){
-        this.getOrders({rows:val, orderStatus: "完成交易"})
-      }else{
-        this.getOrders({rows:val, orderStatus: "等待交易"})
+      if (this.count == 0) {
+        this.getOrders({ rows: val, orderDeal: "交易", storeId: this.storeId });
+      } else if (this.count == 1) {
+        this.getOrders({
+          rows: val,
+          orderStatus: "完成交易",
+          storeId: this.storeId
+        });
+      } else {
+        this.getOrders({
+          rows: val,
+          orderStatus: "等待交易",
+          storeId: this.storeId
+        });
       }
-      this.rows=val;
+      this.rows = val;
       // console.log(`每页 ${val} 条`);
     },
     handleCurrentChange(val) {
-      let rows=this.rows;
-      if( this.count == 0){
-        this.getOrders({page:val, rows,orderDeal: "交易"})
-      }else if( this.count == 1){
-        this.getOrders({page:val,rows, orderStatus: "完成交易"})
-      }else{
-        this.getOrders({page:val,rows, orderStatus: "等待交易"})
+      let rows = this.rows;
+      if (this.count == 0) {
+        this.getOrders({
+          page: val,
+          rows,
+          orderDeal: "交易",
+          storeId: this.storeId
+        });
+      } else if (this.count == 1) {
+        this.getOrders({
+          page: val,
+          rows,
+          orderStatus: "完成交易",
+          storeId: this.storeId
+        });
+      } else {
+        this.getOrders({
+          page: val,
+          rows,
+          orderStatus: "等待交易",
+          storeId: this.storeId
+        });
       }
       // console.log(`当前页: ${val}`);
     }
