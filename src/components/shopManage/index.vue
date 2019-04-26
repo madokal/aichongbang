@@ -36,6 +36,8 @@
             <el-menu-item index="/shopManage/statistics/mapCityShopStatistics">城市店铺分布</el-menu-item>
             <el-menu-item index="/shopManage/statistics/shopServeTotal">店铺服务</el-menu-item>
             <el-menu-item index="/shopManage/statistics/shopTradeTotal">店铺商品</el-menu-item>
+            <el-menu-item index="/shopManage/statistics/lyTotal">测试</el-menu-item>
+            
           </el-submenu>
         </el-menu>
       </el-aside>
@@ -69,12 +71,11 @@ export default {
         method: "get",
         url: "/login/getSession"
      }).then((res) => {
-        if (!res.data.userName) {
-          this.$router.replace("/login");
-        } else {
-          if (!this.user.userName) {
+        if (res.data.role !=="店铺管理员") {
+          this.$router.push("/login");
+        } else{
+          this.$router.push("/shopManage");
             this.user = res.data;
-          }
         }
       });
     }
