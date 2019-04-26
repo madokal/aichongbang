@@ -69,12 +69,11 @@ export default {
         method: "get",
         url: "/login/getSession"
      }).then((res) => {
-        if (!res.data.userName) {
-          this.$router.replace("/login");
-        } else {
-          if (!this.user.userName) {
+        if (res.data.role !=="店铺管理员") {
+          this.$router.push("/login");
+        } else{
+          this.$router.push("/shopManage");
             this.user = res.data;
-          }
         }
       });
     }

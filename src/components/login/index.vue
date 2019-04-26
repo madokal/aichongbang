@@ -136,8 +136,8 @@ export default {
                 pwd: this.$refs[formName].model.pwd
               }
             }).then(res => {
-                 console.log(11);
-              console.log(res.data);
+                //  console.log(11);
+              // console.log(res.data);
               if (res.data.status == 1) {
                 // 未开店  跳转店铺申请页面
                 alert("无店铺信息!点击确定跳转申请店铺！");
@@ -173,9 +173,8 @@ axios({
                 pwd: this.$refs[formName].model.pwd2
               }
             }).then(res => {
-              console.log(res.data);
+              // console.log(res.data);
               if (res.data.status == 1) {
-                alert("恭喜登录成功!进入系统管理界面");
                 this.$router.push("manage");
               } else {
                 alert("你不是管理员或账号密码错误，请重新输入");
