@@ -267,7 +267,7 @@ export default {
             }
           }).then(res => {
             axios({
-              url: "/shopApply/" + userId,
+              url: "/shopApply/users/" + userId,
               method: "put",
               data: { storeStatus: "待审核" }
             }).then(res => {

@@ -105,52 +105,52 @@ export default {
         axios({
           method: "put",
           url: "/shopSys/auditshop/" + id,
-          data: { storeStatus: 1 }
+          data: { storeStatus: "1" }
         }).then(() => {
           this.setNoshops();
           this.setAuditVisible(false);
         });
-
         axios({
-          url: "/userSys/" + this.userId,
+          url: "/shopApply/users/" + this.userId,
           method: "put",
           data: { storeStatus: "已开店" }
         }).then(res => {
-          console.log(res);
+          // console.log(res);
+          this.$message.success("审核成功");
         });
       } else if (this.edit == "确认关闭该门店？") {
         axios({
           method: "put",
           url: "/shopSys/auditshop/" + id,
-          data: { storeStatus: 2 }
-        }).then(() => {
-          this.setCloseshops();
-          this.setAuditVisible(false);
-        });
-
-        axios({
-          url: "/userSys/" + this.userId,
-          method: "put",
-          data: { storeStatus: "已封店" }
-        }).then(res => {
-          console.log(res);
-        });
-      } else {
-        axios({
-          method: "put",
-          url: "/shopSys/auditshop/" + id,
-          data: { storeStatus: 1 }
+          data: { storeStatus: "2" }
         }).then(() => {
           this.setShopsed();
           this.setAuditVisible(false);
         });
 
         axios({
-          url: "/userSys/" + this.userId,
+          url: "/shopApply/users/" + this.userId,
+          method: "put",
+          data: { storeStatus: "已封店" }
+        }).then(res => {
+         this.$message.success("该门店已被关闭");
+        });
+      } else {
+        axios({
+          method: "put",
+          url: "/shopSys/auditshop/" + id,
+          data: { storeStatus: "1" }
+        }).then(() => {
+          this.setCloseshops();
+          this.setAuditVisible(false);
+        });
+
+        axios({
+          url: "/shopApply/users/" + this.userId,
           method: "put",
           data: { storeStatus: "已开店" }
         }).then(res => {
-          console.log(res);
+          this.$message.success("该门店已重开");
         });
       }
     },

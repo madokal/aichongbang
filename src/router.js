@@ -30,9 +30,10 @@ import ShopManager from "./components/ShopManager";
 
 
 
+
 Vue.use(VueRouter);
 const routes = [
-  { path: "/", component: Manage },
+  { path: "/", component: Login },
   { path: "/register", component: Register },
   { path: "/login", component: Login },
   { path: "/shopApply", component: ShopApply },
@@ -67,7 +68,6 @@ const routes = [
       { path: "/shopManage/statistics/mapCityShopStatistics", component: MapCityShopStatistics },
       { path: "/shopManage/statistics/shopServeTotal", component: ShopServeTotal },
       { path: "/shopManage/statistics/shopTradeTotal", component: ShopTradeTotal },
-  
     ]
   }
 ];

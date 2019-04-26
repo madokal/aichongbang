@@ -23,8 +23,7 @@ export default {
     return {
       type: "门店服务统计",
       serveAxisData: [],
-      serveSeriesData: [],
-      zoom: 0
+      serveSeriesData: []
     };
   },
   mounted() {
@@ -70,7 +69,7 @@ export default {
           {
             name: "季度服务次",
             type: "pie",
-            radius: "80%",
+            radius: "70%",
             center: ["50%", "60%"],
             data: this.serveSeriesData,
             itemStyle: {

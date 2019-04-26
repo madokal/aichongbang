@@ -7,7 +7,7 @@ import shops from './shops.js'
 import serviceModule from './serviceModule.js'
 import serviceTypeModule from './serviceTypeModule.js'
 import orderModule from "./orderModule"
-import shopManagerModule from "./shopManagerModule.js";
+import shopManagerModule from "./studentModule.js";
 import userSysModule from "./userSysModule.js";
 Vue.use(Vuex);
 export default new Vuex.Store({
@@ -20,7 +20,7 @@ export default new Vuex.Store({
     studentModule,
     shops,
     orderModule,
-    shopManagerModule,
+    studentModule,
     userSysModule,
   }
 });
