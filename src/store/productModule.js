@@ -21,7 +21,7 @@ export default {
       pictures: "",
       id: "",
       visible: false,
-      shopId:""
+      shopId:"",
     },
       searchRule: {
       type: "",
@@ -68,7 +68,7 @@ export default {
       // console.log(addMess);
       axios({
         method: "post",
-        url: "/product",
+        url: "/product/"+id,
         data: addMess
       }).then(res => {
 

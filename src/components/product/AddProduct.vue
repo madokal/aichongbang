@@ -150,11 +150,11 @@ export default {
             let data = { ...this.form };
             data.id =this.shopId;
             // console.log(this.shopId,"1111")
+
+
+
+
             
-
-
-
-
             this.addProduct(data);
             this.dialogFormVisible = false;
             let page = this.pagenation.curpage;
