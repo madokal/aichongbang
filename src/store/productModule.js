@@ -78,7 +78,9 @@ export default {
       axios({
         method: "delete",
         url: "/product/" + id
-      }).then(res => {});
+      }).then(res => {
+
+      });
     },
     updateProduct({ commit }, data) {
       axios({
@@ -107,10 +109,12 @@ export default {
       });
     },
     getUpdateProduct({ commit }, id) {
+      
       axios({
         method: "get",
-        url: "/product/" + id
+        url: "/product/oneproduct/" + id
       }).then(res => {
+        console.log(res.data);
         commit("setProduct", res.data);
       });
     },

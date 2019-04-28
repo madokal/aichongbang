@@ -104,9 +104,9 @@ export default {
    computed: {
     ...mapState(["products","pagenation"])
   },
-    created() {
-    this.getProducts();
-  },
+  //  created() {
+  //  this.getProducts();
+  // },
    methods: {
     ...mapActions(["deleteProduct", "getProducts", "getUpdateProduct"]),
     del(id) {
@@ -125,6 +125,7 @@ export default {
         });
     },
     handleEdit(id) {
+      console.log(id)
       this.getUpdateProduct(id);
     }
   }

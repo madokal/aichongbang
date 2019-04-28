@@ -1,7 +1,7 @@
 <template>
   <el-dialog title="修改商品" :visible.sync="product.visible" >
-    <el-form>
-      <el-form-item label="名称" :label-width="formLabelWidth">
+    <el-form :model="product">
+      <el-form-item label="名称" :label-width="formLabelWidth" >
         <el-input v-model="name" autocomplete="off"></el-input>
       </el-form-item>
 

@@ -25,6 +25,10 @@ export default {
       ProductPage,
       UpdataProduct
   },
+  created() {
+
+   this.getProducts();
+  },
    computed: {
     ...mapState(["products", "product"])
   },

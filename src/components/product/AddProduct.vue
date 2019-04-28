@@ -146,6 +146,7 @@ export default {
             url: "/product/shop",
             params: { id }
           }).then(res => {
+            console.log(res.data)
             this.setShopId(res.data[0]._id);
             let data = { ...this.form };
             data.id =this.shopId;
@@ -153,6 +154,7 @@ export default {
 
 
 
+          
 
             
             this.addProduct(data);
