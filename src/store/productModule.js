@@ -68,7 +68,7 @@ export default {
       // console.log(addMess);
       axios({
         method: "post",
-        url: "/product/"+id,
+        url: "/product",
         data: addMess
       }).then(res => {
 
