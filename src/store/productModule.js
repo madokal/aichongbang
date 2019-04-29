@@ -2,8 +2,8 @@ import axios from "axios";
 export default {
   namespaced: true,
   state: {
-      products: [],
-      product: {
+    products: [],
+    product: {
       name: "",
       commodityType: "",
       textureOrMade: "",
@@ -21,9 +21,9 @@ export default {
       pictures: "",
       id: "",
       visible: false,
-      shopId:"",
+      shopId: ""
     },
-      searchRule: {
+    searchRule: {
       type: "",
       value: ""
     },
@@ -47,40 +47,38 @@ export default {
     },
     setShopId(state, shopId) {
       state.shopId = shopId;
-    },
+    }
   },
+  
   actions: {
-    getProducts({ commit,state }, rule = {}) {
+    getProducts({ commit, state }, rule = {}) {
       let page = rule.page || 1;
       let rows = rule.rows || 5;
       let type = rule.type || "";
       let value = rule.value || "";
       axios({
         method: "get",
-        url: "/product/"+state.shopId,
+        url: "/product/" + state.shopId,
         params: { page, rows, type, value }
       }).then(res => {
         commit("setProducts", res.data.rows);
         commit("setPagenation", res.data);
       });
     },
+
     addProduct({ commit }, addMess) {
       // console.log(addMess);
       axios({
         method: "post",
         url: "/product",
         data: addMess
-      }).then(res => {
-
-      });
+      }).then(res => {});
     },
     deleteProduct({ commit }, id) {
       axios({
         method: "delete",
         url: "/product/" + id
-      }).then(res => {
-
-      });
+      }).then(res => {});
     },
     updateProduct({ commit }, data) {
       axios({
@@ -89,10 +87,10 @@ export default {
         data: {
           name: data.name,
           commodityType: data.commodityType,
-          textureOrMade:data.textureOrMade,
+          textureOrMade: data.textureOrMade,
           size: data.size,
           exclusiveSize: data.exclusiveSize,
-          weight:data.weight,
+          weight: data.weight,
           taste: data.taste,
           specialFunc: data.specialFunc,
           palce: data.palce,
@@ -101,15 +99,11 @@ export default {
           supplier: data.supplier,
           info: data.info,
           price: data.price,
-          pictures: data.pictures,
-          
+          pictures: data.pictures
         }
-      }).then(res => {
-        
-      });
+      }).then(res => {});
     },
     getUpdateProduct({ commit }, id) {
-      
       axios({
         method: "get",
         url: "/product/oneproduct/" + id
@@ -117,7 +111,6 @@ export default {
         console.log(res.data);
         commit("setProduct", res.data);
       });
-    },
-   
+    }
   }
 };

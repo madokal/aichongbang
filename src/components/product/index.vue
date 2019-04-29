@@ -10,8 +10,9 @@
 </template>
 
 <script>
+import axios from "axios";
 import { createNamespacedHelpers } from "vuex";
-const { mapActions, mapState } = createNamespacedHelpers("productModule");
+const { mapActions, mapState ,mapMutations} = createNamespacedHelpers("productModule");
 import AddProduct from "./AddProduct";
 import ProductList from "./ProductList";
 import SearchProduct from "./SearchProduct";
@@ -26,15 +27,30 @@ export default {
       UpdataProduct
   },
   created() {
-
-   this.getProducts();
+   axios({
+       method: "get",
+          url: "/login/getSession"
+   }).then(res=>{
+        let id = res.data._id;
+         axios({
+            method: "get",
+            url: "/product/shop",
+            params: { id }
+          }).then(res=>{
+                this.setShopId(res.data[0]._id);
+                 this.getProducts();
+          })
+   })
+  
   },
    computed: {
     ...mapState(["products", "product"])
   },
   methods: {
-    ...mapActions(["getProducts"])
-  }
+    ...mapActions(["getProducts"]),
+     ...mapMutations(["setShopId"]),
+  },
+  
    
 };
 </script>
